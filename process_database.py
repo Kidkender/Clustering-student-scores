@@ -70,7 +70,6 @@ def Column_all_sheets():
         df = pd.read_excel(excel_file, sheet_name=sheet_name)
         df['Ky'] = int(sheet_name)  # Chỉ định kỳ dựa trên tên sheet
 
-    # In danh sách tên cột trong DataFrame
         print("Danh sách các cột trong sheet", sheet_name, ":", df.columns)
 
 def insert_scores_from_excel(excel_file):
@@ -115,11 +114,11 @@ def results_of_the_period(excel_file):
                 for index, row in df.iterrows():
                     cursor.execute(
                         """
-                       INSERT INTO KetQuaDanhGia (MaHocSinh, Ky, HocLuc, HanhKiem)
-                        SELECT ?, ?, ?, ?
+                       INSERT INTO KetQuaDanhGia (MaHocSinh, Ky,DiemTongKet, HocLuc, HanhKiem)
+                        SELECT ?, ?, ?, ?,?
                         WHERE NOT EXISTS (SELECT 1 FROM KetquaDanhgia WHERE MaHocSinh = ? AND Ky = ?)
                         """,
-                        (row['Mã học sinh'], row['Ky'], row['Học lực'], row['Hạnh kiểm'], row['Mã học sinh'], row['Ky'])
+                        (row['Mã học sinh'], row['Ky'], row['Điểm TK'], row['Học lực'], row['Hạnh kiểm'], row['Mã học sinh'], row['Ky'])
 
                     )
 
@@ -133,7 +132,7 @@ def results_of_the_period(excel_file):
 
 if __name__ == "__main__":
     excel_file = 'bangdiem.xlsx' 
-    # results_of_the_period(excel_file)
+    results_of_the_period(excel_file)
     # total_students=get_total_students()
     # print("Total students ",total_students)
     # insert_students_from_excel(excel_file)
