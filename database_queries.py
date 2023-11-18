@@ -2,8 +2,9 @@
 
 import pandas as pd
 import pyodbc
-from utils import Last_Semester_Of_Grade, group_subject, get_semester_grade
+from utils.subject_grade_utils import Last_Semester_Of_Grade, is_group_subject, get_semester_grade
 from database_connection import connect_to_database, close_connection
+from errors.error_exception import error_response
 
 
 def query_score_from_database(connection, subject, semester):
@@ -49,11 +50,13 @@ def calculate_score_year(connection, subject, semester1, semester2):
 
 
 def get_data_grade(subject, grade):
+    print("Grade in function ", grade)
     semester_1, semester_2 = get_semester_grade(grade)
+    print("semester 2", semester_2)
     connection = connect_to_database()
     if connection:
         try:
-            if grade == '12':
+            if grade == 12:
                 data = query_score_from_database(
                     connection, subject, semester_1)
                 return data[f'{subject}']
@@ -96,6 +99,8 @@ def get_score_Avg_Semester(semester):
 
 def get_score_Avg_year(grade):
     semester_1, semester_2 = get_semester_grade(grade)
+    if grade == 12:
+        semester_2 = semester_1
     connection = connect_to_database()
     if connection:
         try:
@@ -124,10 +129,12 @@ def query_Score_Group(connection, grade, subject_1, subject_2, subject_3):
 
 
 def get_Score_Group(group, grade):
+    subjects = is_group_subject(group)
+    if subjects is not None:
+        subject_1, subject_2, subject_3 = subjects
+    else:
+        return None
     connection = connect_to_database()
-    subject_1, subject_2, subject_3 = group_subject(group)
-    if (subject_1 == None or subject_2 == None or subject_3 == None):
-        return ExceptionGroup("Group invalid")
     if connection:
         try:
             # Lấy dữ liệu từ bảng hocsinh và hiển thị bằng Pandas

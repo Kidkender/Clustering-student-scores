@@ -2,7 +2,7 @@
 
 from itertools import combinations
 from database_queries import get_Subject_From_Top5Avg
-from utils import reverse_group_subject
+from utils.subject_grade_utils import reverse_group_subject
 
 
 def create_group_subject_from_top5(top5_subject):

@@ -1,21 +1,30 @@
 # utils.py
 
 def get_semester_grade(grade):
-    if grade == '10':
+    if grade == 10:
         semester_1 = 1
         semester_2 = 2
         return semester_1, semester_2
-    elif grade == '11':
+    elif grade == 11:
         semester_1 = 3
         semester_2 = 4
         return semester_1, semester_2
-    elif grade == '12':
+    elif grade == 12:
         semester_1 = 5
         semester_2 = None
         return semester_1, semester_2
 
 
-def group_subject(group):
+def is_subject_valid(subject):
+    allowed_subjects = ["toan", "ly", "van", "anh", "sinh",
+                        "su", "su", "dia", "ly", "hoa", "ngoai_ngu"]
+    if subject.lower() in allowed_subjects:
+        return subject.lower()
+    else:
+        return None
+
+
+def is_group_subject(group):
     subject_1 = ""
     subject_2 = ""
     subject_3 = ""
@@ -52,7 +61,7 @@ def group_subject(group):
         subject_2 = "Van"
         subject_3 = "Ngoai_Ngu"
     else:
-        raise Exception("Invalid group")
+        return None
     return subject_1, subject_2, subject_3
 
 

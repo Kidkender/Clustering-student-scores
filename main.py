@@ -1,5 +1,3 @@
-# main_file.py
-
 from database_queries import (
     get_score_subject_semester,
     get_data_grade,
