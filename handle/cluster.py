@@ -31,7 +31,7 @@ def cluster_data(data, n_clusters):
 
         # Lưu trữ điểm thấp nhất và cao nhất
         min_avg_scores.append(min_score)
-        max_avg_scores.append()
+        max_avg_scores.append(max_score)
 
     min_avg = np.min(min_avg_scores)
     max_avg = np.max(max_avg_scores)

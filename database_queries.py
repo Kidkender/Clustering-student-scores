@@ -133,7 +133,7 @@ def get_Score_Group(group, grade):
     if subjects is not None:
         subject_1, subject_2, subject_3 = subjects
     else:
-        return None
+        return "group subject invalid"
     connection = connect_to_database()
     if connection:
         try:
@@ -154,22 +154,22 @@ def get_Score_Group(group, grade):
 def query_Top5_Subject_Avg(connection, student_code, semester):
     try:
         query_3 = f"""
-            Select  top 5 value,column_name from (
-                Select Toan as value,column_name='Toan' from diem where mahocsinh='{student_code}' and ky ={semester}
+            Select  top 5 value,subject from (
+                Select Toan as value,subject='Toan' from diem where mahocsinh='{student_code}' and ky ={semester}
                 Union
-                Select Li as value ,column_name='Li'from diem where mahocsinh='{student_code}' and ky ={semester}
+                Select Li as value ,subject='Li'from diem where mahocsinh='{student_code}' and ky ={semester}
                 Union
-                Select Hoa as value ,column_na55e='Hoa'from diem where mahocsinh='{student_code}' and ky ={semester}
+                Select Hoa as value ,subject='Hoa'from diem where mahocsinh='{student_code}' and ky ={semester}
                 Union
-                Select Sinh value ,column_name='Sinh' from diem where mahocsinh='{student_code}' and ky ={semester}
+                Select Sinh value ,subject='Sinh' from diem where mahocsinh='{student_code}' and ky ={semester}
                 Union
-                Select Van as value ,column_name='Van' from diem where mahocsinh='{student_code}' and ky ={semester}
+                Select Van as value ,subject='Van' from diem where mahocsinh='{student_code}' and ky ={semester}
                 Union
-                Select Su  as value ,column_name='Su' from diem where mahocsinh='{student_code}' and ky ={semester}
+                Select Su  as value ,subject='Su' from diem where mahocsinh='{student_code}' and ky ={semester}
                 Union
-                Select Dia as value ,column_name='Dia' from diem where mahocsinh='{student_code}' and ky ={semester}
+                Select Dia as value ,subject='Dia' from diem where mahocsinh='{student_code}' and ky ={semester}
                 Union
-                Select Ngoai_Ngu as value ,column_name='Ngoai_Dgu' from diem where mahocsinh='{student_code}' and ky ={semester}
+                Select Ngoai_Ngu as value ,subject='Ngoai_Dgu' from diem where mahocsinh='{student_code}' and ky ={semester}
             ) as t
             order by value desc
         """

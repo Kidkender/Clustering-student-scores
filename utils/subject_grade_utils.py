@@ -91,9 +91,7 @@ def reverse_group_subject(subjects):
         tuple(sorted(["Toan", "Van", "Hoa"])): "C02",
         tuple(sorted(["Toan", "Van", "Ngoai_Ngu"])): "D01",
     }
-
     sorted_subjects = tuple(sorted(subjects))
-
     if sorted_subjects in group_dict:
         return group_dict[sorted_subjects]
     else:
