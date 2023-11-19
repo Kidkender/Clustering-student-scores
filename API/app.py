@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from database_queries import (
     get_score_subject_semester,
     get_data_grade,
