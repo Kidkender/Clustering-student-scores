@@ -196,3 +196,72 @@ def get_Subject_From_Top5Avg(grade, student_code):
             close_connection(connection)
     else:
         print("Không thể kết nối đến cơ sở dữ liệu.")
+
+
+def Query_Students(connection):
+    try:
+        query = f"Select * from hocsinh"
+        data = pd.read_sql_query(query, connection)
+        return data
+    except pyodbc.Error as e:
+        print(f"Error: {str(e)}")
+        return None
+
+
+def get_students():
+    connection = connect_to_database()
+    if connection:
+        try:
+            data = Query_Students(connection)
+            if data is not None:
+                return data
+        finally:
+            close_connection(connection)
+    else:
+        print("Không thể kết nối đến cơ sở dữ liệu.")
+
+
+def Query_Score_Students(connection):
+    try:
+        query = f"Select * from hocsinh h, diem d where h.MaHocSinh = d.MaHocSinh"
+        data = pd.read_sql_query(query, connection)
+        return data
+    except pyodbc.Error as e:
+        print(f"Error: {str(e)}")
+        return None
+
+
+def get_score_students():
+    connection = connect_to_database()
+    if connection:
+        try:
+            data = Query_Score_Students(connection)
+            if data is not None:
+                return data
+        finally:
+            close_connection(connection)
+    else:
+        print("Không thể kết nối đến cơ sở dữ liệu.")
+
+
+def Query_RateResult(connection):
+    try:
+        query = f"Select * from hocsinh h, KetQuaDanhGia k where h.MaHocSinh = k.MaHocSinh"
+        data = pd.read_sql_query(query, connection)
+        return data
+    except pyodbc.Error as e:
+        print(f"Error: {str(e)}")
+        return None
+
+
+def get_RateResult():
+    connection = connect_to_database()
+    if connection:
+        try:
+            data = Query_RateResult(connection)
+            if data is not None:
+                return data
+        finally:
+            close_connection(connection)
+    else:
+        print("Không thể kết nối đến cơ sở dữ liệu.")

@@ -7,16 +7,41 @@ from database_queries import (
     get_Subject_From_Top5Avg
 )
 from model.request.ApiRequest import GradeClusterReq, GradeGroupReq, GradeStudentReq, SemesterClusterReq, SubjectGradeReq, SubjectSemesterReq
-from utils.subject_grade_utils import is_subject_valid
-from utils.string_utils import isNull
 from errors.error_exception import error_response
-from utils.semester_grade_util import is_semester_valid, is_grade_valid
 from handle.cluster import cluster_data
 from handle.recommendations import create_groupSubject_From_Top5, reverse_group_subject, find_group_subject, recommend_group
 from model.response.index import ApirResponse
+from database_queries import get_students, get_RateResult, get_score_students
 
 
 def register_api_routes(app: Flask):
+    @app.route("/api/students", methods=["GET"])
+    def api_students():
+        students = get_students()
+        if students is not None and not students.empty:
+            student_dict = students.to_dict(orient="records")
+            return jsonify(student_dict)
+        else:
+            return jsonify({"error": "No students data available"}), 404
+
+    @app.route("/api/rates", methods=["GET"])
+    def api_rates():
+        rate = get_RateResult()
+        if rate is not None and not rate.empty:
+            rate_dict = rate.to_dict(orient="records")
+            return jsonify(rate_dict)
+        else:
+            return jsonify({"error": "No rates data available"}), 404
+
+    @app.route("/api/scores", methods=["GET"])
+    def api_scores():
+        score = get_score_students()
+        if score is not None and not score.empty:
+            score_dict = score.to_dict(orient="records")
+            return jsonify(score_dict)
+        else:
+            return jsonify({"error": "No score data available"}), 404
+
     @app.route('/api/score-subject-semester', methods=['GET'])
     def api_score_subject_semester():
 
