@@ -1,10 +1,7 @@
-# database_queries.py
-
 import pandas as pd
 import pyodbc
 from utils.subject_grade_utils import Last_Semester_Of_Grade, is_group_subject, get_semester_grade
 from database_connection import connect_to_database, close_connection
-from errors.error_exception import error_response
 
 
 def query_score_from_database(connection, subject, semester):
@@ -50,9 +47,7 @@ def calculate_score_year(connection, subject, semester1, semester2):
 
 
 def get_data_grade(subject, grade):
-    print("Grade in function ", grade)
     semester_1, semester_2 = get_semester_grade(grade)
-    print("semester 2", semester_2)
     connection = connect_to_database()
     if connection:
         try:
@@ -117,15 +112,12 @@ def get_score_Avg_year(grade):
 def query_Score_Group(connection, grade, subject_1, subject_2, subject_3):
     semester = Last_Semester_Of_Grade(grade)
     try:
-        # Thực hiện truy vấn SQL để lấy dữ liệu từ bảng hocsinh
         query = f"SELECT {subject_1},{subject_2},{subject_3} FROM diem where ky='{semester}'"
         data = pd.read_sql_query(query, connection)
         return data
     except pyodbc.Error as e:
         print(f"Error: {str(e)}")
         return None
-
-# Kết nối đến cơ sở dữ liệu
 
 
 def get_Score_Group(group, grade):
@@ -137,15 +129,13 @@ def get_Score_Group(group, grade):
     connection = connect_to_database()
     if connection:
         try:
-            # Lấy dữ liệu từ bảng hocsinh và hiển thị bằng Pandas
-            # table_name = 'diem'
+
             data = query_Score_Group(
                 connection, grade, subject_1, subject_2, subject_3)
             if data is not None:
                 print(f"Điểm tổ hợp môn {group} tại kì 1 lớp 12 là: ")
                 return data
         finally:
-            # Đóng kết nối đến cơ sở dữ liệu sau khi hoàn thành
             close_connection(connection)
     else:
         print("Không thể kết nối đến cơ sở dữ liệu.")
@@ -192,7 +182,6 @@ def get_Subject_From_Top5Avg(grade, student_code):
                     f"Top 5 môn có điểm trung  bình cao nhất tại khối {grade} của học sinh")
                 return data
         finally:
-            # Đóng kết nối đến cơ sở dữ liệu sau khi hoàn thành
             close_connection(connection)
     else:
         print("Không thể kết nối đến cơ sở dữ liệu.")

@@ -1,17 +1,13 @@
 import pandas as pd
 import pyodbc
 
-# Kết nối đến cơ sở dữ liệu SQL Server
-server = 'Acer'  # Thay 'ten_server' bằng tên máy chủ SQL Server của bạn
-database = 'db_diemso'  # Thay 'QuanLyHocTap' bằng tên cơ sở dữ liệu của bạn
+server = 'Acer'
+database = 'db_diemso'
 username = 'sa'
 password = '1'
 
 connection_string = f'DRIVER={{SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
 
-# excel_file = 'bangdiem.xlsx'
-# sheet_names = pd.ExcelFile(excel_file).sheet_names
-# df = pd.read_excel(excel_file)
 
 sheet_names = ['1', '2', '3', '4', '5']
 
@@ -75,8 +71,6 @@ def Column_all_sheets():
     for sheet_name in sheet_names:
         df = pd.read_excel(excel_file, sheet_name=sheet_name)
         df['Ky'] = int(sheet_name)  # Chỉ định kỳ dựa trên tên sheet
-
-        print("Danh sách các cột trong sheet", sheet_name, ":", df.columns)
 
 
 def insert_scores_from_excel(excel_file):
@@ -142,8 +136,3 @@ def results_of_the_period(excel_file):
 if __name__ == "__main__":
     excel_file = 'bangdiem.xlsx'
     results_of_the_period(excel_file)
-    # total_students=get_total_students()
-    # print("Total students ",total_students)
-    # insert_students_from_excel(excel_file)
-    # Column_all_sheets()
-    # insert_scores_from_excel(excel_file)

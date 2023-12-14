@@ -25,24 +25,13 @@ def cluster_data(data, n_clusters):
 
         min_score = np.min(cluster_data)
         max_score = np.max(cluster_data)
-        # print(f"Điểm thấp nhất: {min_score:.2f}")
-        # print(f"Điểm cao nhất: {max_score:.2f}")
-        # print(f"Điểm trung bình: {avg_score:.2f}")
 
-        # Lưu trữ điểm thấp nhất và cao nhất
         min_avg_scores.append(min_score)
         max_avg_scores.append(max_score)
 
     min_avg = np.min(min_avg_scores)
     max_avg = np.max(max_avg_scores)
-    print(f"\nĐiểm trung bình thấp nhất: {min_avg:.2f}")
-    print(f"Điểm trung bình cao nhất: {max_avg:.2f}")
-    print(f"Điểm trung bình của tất cả cụm: {np.mean(avg_scores):.2f}")
 
-    # Điểm trung bình của từng cụm
     cluster_centers = kmeans.cluster_centers_
-    # print("\nĐiểm trung bình của từng cụm:")
-    # for i, center in enumerate(cluster_centers):
-    #     print(f"Cụm {i + 1}: {center[0]:.2f}")
 
     return cluster_centers, labels, data
