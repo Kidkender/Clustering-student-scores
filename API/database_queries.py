@@ -112,7 +112,7 @@ def get_score_Avg_year(grade):
 def query_Score_Group(connection, grade, subject_1, subject_2, subject_3):
     semester = Last_Semester_Of_Grade(grade)
     try:
-        query = f"SELECT {subject_1},{subject_2},{subject_3} FROM diem where ky='{semester}'"
+        query = f"SELECT {subject_1},{subject_2},{subject_3}, mahocsinh FROM diem where ky='{semester}'"
         data = pd.read_sql_query(query, connection)
         return data
     except pyodbc.Error as e:
