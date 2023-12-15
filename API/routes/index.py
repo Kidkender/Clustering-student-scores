@@ -1,5 +1,4 @@
 from flask import jsonify, request
-from flask import Flask
 from database_queries import get_data_grade, get_score_Avg_Semester, get_score_Avg_year
 from database_queries import get_score_subject_semester
 from database_queries import (
@@ -14,7 +13,7 @@ from model.response.index import ApirResponse
 from database_queries import get_students, get_RateResult, get_score_students
 
 
-def register_api_routes(app: Flask):
+def register_api_routes(app):
     @app.route("/api/students", methods=["GET"])
     def api_students():
         students = get_students()
@@ -22,7 +21,7 @@ def register_api_routes(app: Flask):
             student_dict = students.to_dict(orient="records")
             return jsonify(student_dict)
         else:
-            return jsonify({"error": "No students data available"}), 404
+            return jsonify({"error": "No students data available"}),
 
     @app.route("/api/rates", methods=["GET"])
     def api_rates():
