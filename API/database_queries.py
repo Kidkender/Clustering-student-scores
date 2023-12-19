@@ -254,3 +254,76 @@ def get_RateResult():
             close_connection(connection)
     else:
         print("Không thể kết nối đến cơ sở dữ liệu.")
+
+
+def Query_Students_byId(connection, id):
+    try:
+        query = f"Select * from hocsinh h where h.MaHocSinh = {id}"
+        data = pd.read_sql_query(query, connection)
+        return data
+    except pyodbc.Error as e:
+        print(f"Error: {str(e)}")
+        return None
+
+
+def get_student_by_id(id):
+    connection = connect_to_database()
+    if connection:
+        try:
+            data = Query_Students_byId(connection, id)
+            if data is not None:
+                return data
+        finally:
+            close_connection(connection)
+    else:
+        print("Không thể kết nối đến cơ sở dữ liệu.")
+
+
+def Query_Score_by_student_id(connection, id):
+    try:
+        query = f"Select * from  diem d where d.MaHocSinh = {id}"
+        data = pd.read_sql_query(query, connection)
+        return data
+    except pyodbc.Error as e:
+        print(f"Error: {str(e)}")
+        return None
+
+
+def get_score_by_student_id(id):
+    connection = connect_to_database()
+    if connection:
+        try:
+            data = Query_Score_by_student_id(connection, id)
+            if data is not None:
+                return data
+        finally:
+            close_connection(connection)
+    else:
+        print("Không thể kết nối đến cơ sở dữ liệu.")
+
+
+"""_summary_Get Rate result by student id
+"""
+
+
+def Query_rate_by_student_id(connection, id):
+    try:
+        query = f"Select * from KetQuaDanhGia k where k.MaHocSinh = {id}"
+        data = pd.read_sql_query(query, connection)
+        return data
+    except pyodbc.Error as e:
+        print(f"Error: {str(e)}")
+        return None
+
+
+def get_rate_by_student_id(id):
+    connection = connect_to_database()
+    if connection:
+        try:
+            data = Query_rate_by_student_id(connection, id)
+            if data is not None:
+                return data
+        finally:
+            close_connection(connection)
+    else:
+        print("Không thể kết nối đến cơ sở dữ liệu.")

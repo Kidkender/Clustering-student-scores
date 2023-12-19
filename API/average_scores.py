@@ -1,5 +1,3 @@
-# average_scores.py
-
 import numpy as np
 from database_queries import get_Score_Group
 

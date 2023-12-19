@@ -10,13 +10,31 @@ from errors.error_exception import error_response
 from handle.cluster import cluster_data
 from handle.recommendations import create_groupSubject_From_Top5, reverse_group_subject, find_group_subject, recommend_group
 from model.response.index import ApirResponse
-from database_queries import get_students, get_RateResult, get_score_students
+from database_queries import get_students, get_RateResult, get_student_by_id, get_score_students, get_score_by_student_id, get_rate_by_student_id
 
 
 def register_api_routes(app):
     @app.route("/api/students", methods=["GET"])
     def api_students():
         students = get_students()
+        if students is not None and not students.empty:
+            student_dict = students.to_dict(orient="records")
+            return jsonify(student_dict)
+        else:
+            return jsonify({"error": "No students data available"}),
+
+    @app.route("/api/students/<code_student>", methods=["GET"])
+    def api_student_by_id(code_student):
+        students = get_student_by_id(code_student)
+        if students is not None and not students.empty:
+            student_dict = students.to_dict(orient="records")
+            return jsonify(student_dict)
+        else:
+            return jsonify({"error": "No students data available"}),
+
+    @app.route("/api/rate/<code_student>", methods=["GET"])
+    def api_rate_by_id(code_student):
+        students = get_rate_by_student_id(code_student)
         if students is not None and not students.empty:
             student_dict = students.to_dict(orient="records")
             return jsonify(student_dict)
@@ -31,6 +49,15 @@ def register_api_routes(app):
             return jsonify(rate_dict)
         else:
             return jsonify({"error": "No rates data available"}), 404
+
+    @app.route("/api/score/<code_student>", methods=["GET"])
+    def api_score_by_id(code_student):
+        students = get_score_by_student_id(code_student)
+        if students is not None and not students.empty:
+            student_dict = students.to_dict(orient="records")
+            return jsonify(student_dict)
+        else:
+            return jsonify({"error": "No students data available"}),
 
     @app.route("/api/scores", methods=["GET"])
     def api_scores():
