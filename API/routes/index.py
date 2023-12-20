@@ -11,7 +11,9 @@ from handle.cluster import cluster_data
 from handle.recommendations import create_groupSubject_From_Top5, reverse_group_subject, find_group_subject, recommend_group
 from model.response.index import ApirResponse
 from database_queries import get_students, get_RateResult, get_student_by_id, get_score_students, get_score_by_student_id, get_rate_by_student_id
-from model.response.student_response import student_model
+from model.response.student import student_model
+from model.response.rate import rate_model
+from model.response.score import score_model
 from helper.resource import ResourceHelper
 
 
@@ -28,41 +30,29 @@ def register_api_routes(app, api):
             students = get_students()
             return self.handle_data_response(api, students)
 
-    @app.route("/api/rate/<code_student>", methods=["GET"])
-    def api_rate_by_id(code_student):
-        students = get_rate_by_student_id(code_student)
-        if students is not None and not students.empty:
-            student_dict = students.to_dict(orient="records")
-            return jsonify(student_dict)
-        else:
-            return jsonify({"error": "No students data available"}),
+    class RateByIdResource(ResourceHelper):
+        @api.marshal_with(rate_model)
+        def get(self, code_student):
+            rate = get_rate_by_student_id(code_student)
+            return self.handle_data_response(api, rate)
 
-    @app.route("/api/rates", methods=["GET"])
-    def api_rates():
-        rate = get_RateResult()
-        if rate is not None and not rate.empty:
-            rate_dict = rate.to_dict(orient="records")
-            return jsonify(rate_dict)
-        else:
-            return jsonify({"error": "No rates data available"}), 404
+    class RatesResource(ResourceHelper):
+        @api.marshal_with(rate_model)
+        def get(self):
+            rates = get_RateResult()
+            return self.handle_data_response(api, rates)
 
-    @app.route("/api/score/<code_student>", methods=["GET"])
-    def api_score_by_id(code_student):
-        students = get_score_by_student_id(code_student)
-        if students is not None and not students.empty:
-            student_dict = students.to_dict(orient="records")
-            return jsonify(student_dict)
-        else:
-            return jsonify({"error": "No students data available"}),
+    class ScoreResource(ResourceHelper):
+        @api.marshal_with(score_model)
+        def get(self, code_student):
+            score = get_score_by_student_id(code_student)
+            return self.handle_data_response(api, score)
 
-    @app.route("/api/scores", methods=["GET"])
-    def api_scores():
-        score = get_score_students()
-        if score is not None and not score.empty:
-            score_dict = score.to_dict(orient="records")
-            return jsonify(score_dict)
-        else:
-            return jsonify({"error": "No score data available"}), 404
+    class ScoresResource(ResourceHelper):
+        @api.marshal_with(score_model)
+        def get(self):
+            scores = get_score_students()
+            return self.handle_data_response(api, scores)
 
     @app.route('/api/score-subject-semester', methods=['GET'])
     def api_score_subject_semester():
@@ -228,3 +218,7 @@ def register_api_routes(app, api):
 
     api.add_resource(StudentsResource, '/api/students')
     api.add_resource(StudentResource, '/api/students/<code_student>')
+    api.add_resource(RateByIdResource, "/api/rate/<string:code_student>")
+    api.add_resource(RatesResource, "/api/rates")
+    api.add_resource(ScoreResource, "/api/score/<code_student>")
+    api.add_resource(ScoresResource, "/api/scores")
