@@ -11,26 +11,22 @@ from handle.cluster import cluster_data
 from handle.recommendations import create_groupSubject_From_Top5, reverse_group_subject, find_group_subject, recommend_group
 from model.response.index import ApirResponse
 from database_queries import get_students, get_RateResult, get_student_by_id, get_score_students, get_score_by_student_id, get_rate_by_student_id
+from model.response.student_response import student_model
+from helper.resource import ResourceHelper
 
 
-def register_api_routes(app):
-    @app.route("/api/students", methods=["GET"])
-    def api_students():
-        students = get_students()
-        if students is not None and not students.empty:
-            student_dict = students.to_dict(orient="records")
-            return jsonify(student_dict)
-        else:
-            return jsonify({"error": "No students data available"}),
+def register_api_routes(app, api):
+    class StudentResource(ResourceHelper):
+        @api.marshal_with(student_model)
+        def get(self, code_student):
+            students = get_student_by_id(code_student)
+            return self.handle_data_response(api, students)
 
-    @app.route("/api/students/<code_student>", methods=["GET"])
-    def api_student_by_id(code_student):
-        students = get_student_by_id(code_student)
-        if students is not None and not students.empty:
-            student_dict = students.to_dict(orient="records")
-            return jsonify(student_dict)
-        else:
-            return jsonify({"error": "No students data available"}),
+    class StudentsResource(ResourceHelper):
+        @api.marshal_with(student_model)
+        def get(self):
+            students = get_students()
+            return self.handle_data_response(api, students)
 
     @app.route("/api/rate/<code_student>", methods=["GET"])
     def api_rate_by_id(code_student):
@@ -229,3 +225,6 @@ def register_api_routes(app):
 
         result = recommend_group(code_student)
         return jsonify({"result": result})
+
+    api.add_resource(StudentsResource, '/api/students')
+    api.add_resource(StudentResource, '/api/students/<code_student>')

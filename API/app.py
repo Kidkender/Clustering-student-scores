@@ -7,7 +7,7 @@ app = Flask(__name__)
 CORS(app)
 api = Api(app)
 
-register_api_routes(app)
+register_api_routes(app, api)
 
 if __name__ == '__main__':
     app.run(debug=True)
