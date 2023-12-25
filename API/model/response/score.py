@@ -1,10 +1,10 @@
 from flask_restx import fields
 
 score_model = {
-    "mahocsinh": fields.Integer,
+    "MaHocSinh": fields.Integer,
     "TenHocSinh": fields.String,
     "Toan": fields.Float,
-    "Li": fields.Float,
+    "Ly": fields.Float,
     "Hoa": fields.Float,
     "Sinh": fields.Float,
     "Van": fields.Float,

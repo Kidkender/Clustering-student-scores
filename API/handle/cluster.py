@@ -7,8 +7,6 @@ def cluster_data(data, n_clusters):
     kmeans = KMeans(n_clusters=n_clusters, n_init=10)
     kmeans.fit(data)
     labels = kmeans.labels_
-    data_transform = kmeans.transform(data)
-
     cluster_counts = [np.sum(labels == i) for i in range(n_clusters)]
     total_data_points = len(data)
     percentages = [count / total_data_points * 100 for count in cluster_counts]
@@ -36,4 +34,4 @@ def cluster_data(data, n_clusters):
 
     cluster_centers = kmeans.cluster_centers_
 
-    return cluster_centers, labels, data, data_transform
+    return cluster_centers, labels, data
