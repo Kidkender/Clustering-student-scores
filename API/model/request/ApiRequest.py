@@ -1,6 +1,6 @@
 from utils.semester_grade_util import is_grade_valid, is_semester_valid
 from utils.subject_grade_utils import is_subject_valid
-from utils.string_utils import isNull, check_parameters
+from utils.string_utils import isNull
 
 
 class SubjectSemesterReq:

@@ -10,7 +10,8 @@ class ApirResponse:
             response_dict["result_cluster"] = {
                 "cluster_centers": self.result_cluster[0].tolist(),
                 "labels": self.result_cluster[1].tolist(),
-                "clustered_data": self.result_cluster[2].tolist()
+                "clustered_data": self.result_cluster[2].tolist(),
+                "data_transform": self.result_cluster[3].tolist()
             }
         return response_dict
 
@@ -21,6 +22,7 @@ class ApirResponse:
             response_dict["result_cluster"] = {
                 "cluster_centers": self.result_cluster[0].tolist(),
                 "labels": self.result_cluster[1].tolist(),
-                "clustered_data": self.result_cluster[2].tolist()
+                "clustered_data": self.result_cluster[2].tolist(),
+                "data_transform": self.result_cluster[3].tolist()
             }
         return response_dict
