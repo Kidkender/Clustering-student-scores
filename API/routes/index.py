@@ -79,8 +79,10 @@ def register_api_routes(app, api):
             return error_response("Invalid or missing parameter!", 400)
 
         result = get_data_grade(api_request.subject, api_request.grade)
+
+        print(result)
         cluster_centers, labels, clustered_data = cluster_data(
-            result, api_request.n_clusters)
+            result["Score_Avg"], api_request.n_clusters)
 
         api_response = ApirResponse(
             result, (cluster_centers, labels, clustered_data))
