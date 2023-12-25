@@ -2,21 +2,21 @@ from enum import Enum
 
 
 class Subject(Enum):
-    TOAN = "Toán"
-    LY = "Vật lý"
-    HOA = "Hóa học"
-    SINH = "Sinh học"
-    LICH_SU = "Lịch sử"
-    DIA_LY = "Địa lý"
-    TIENG_ANH = "Tiếng Anh"
-    VAN = "Văn"
-    GDCD = "Giáo dục công dân"
+    TOAN = "Toan"
+    LY = "Li"
+    HOA = "Hoa"
+    SINH = "Sinh"
+    LICH_SU = "Su"
+    DIA_LY = "Dia"
+    TIENG_ANH = "Ngoai_ngu"
+    VAN = "Van"
+    GDCD = "GDCD"
     KHXH = "Khoa học xã hội"
-    TIENG_VIET = "Tiếng Việt"
-    TIENG_NGA = "Tiếng Nga"
-    TIENG_PHAP = "Tiếng Pháp"
-    TIENG_TRUNG = "Tiếng Trung"
-    TIENG_DUC = "Tiếng Đức"
+    TIENG_VIET = "Tieng_Viet"
+    TIENG_NGA = "Tieng_Nga"
+    TIENG_PHAP = "Tieng_Phap"
+    TIENG_TRUNG = "Tieng_Trung"
+    TIENG_DUC = "Tieng_Duc"
 
 
 class Combination(Enum):
@@ -89,4 +89,16 @@ a01_keys = find_keys(
 
 all_combination_keys = list(Combination.__members__.keys())
 all_subject_keys = list(Subject.__members__.keys())
-print(all_subject_keys)
+
+
+def get_subject_values(combination_str):
+    try:
+        combination_enum = Combination[combination_str]
+        return [subject.value for subject in combination_enum.value]
+    except KeyError:
+        return None
+
+
+values_of_A01 = get_subject_values('A02')
+
+# print(values_of_A01)

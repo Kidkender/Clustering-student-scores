@@ -327,3 +327,29 @@ def get_rate_by_student_id(id):
             close_connection(connection)
     else:
         print("Không thể kết nối đến cơ sở dữ liệu.")
+
+
+def Query_score_by_semester(connection, semester):
+    try:
+        query = f"Select * from diem d, hocsinh h where h.MaHocSinh = d.MaHocSinh and d.ky = {semester}"
+        data = pd.read_sql_query(query, connection)
+        data = data.loc[:, ~data.columns.duplicated()]
+
+        return data
+    except pyodbc.Error as e:
+        print(f"Error: {str(e)}")
+        return None
+
+
+def get_score_by_semester(semester):
+    connection = connect_to_database()
+    if connection:
+        try:
+            data = Query_score_by_semester(connection, semester)
+            if data is not None:
+                print(data)
+                return data
+        finally:
+            close_connection(connection)
+    else:
+        print("Không thể kết nối đến cơ sở dữ liệu.")
