@@ -1,0 +1,81 @@
+<div class="w-full bg-blue-50 h-auto p-8">
+    <div class="h-full w-full bg-white rounded-md p-8">
+        <h2 class="text-xl font-medium mb-2">Danh sách học sinh</h2>
+        <table class="w-full">
+            <thead>
+                <tr>
+                    <th [width]="50">STT</th>
+                    <th [width]="400">Mã học sinh</th>
+                    <th>Họ và tên</th>
+                    <th [width]="100"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of listStudent; let i = index">
+                    <td>{{i + 1}}</td>
+                    <td>{{item.codeStudent}}</td>
+                    <td>{{item.nameStudent}}</td>
+                    <td><a href="/detail/{{item.codeStudent}}"><img src="https://cdn-icons-png.flaticon.com/128/566/566768.png" width="20" height="20"></a></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2 class="text-xl font-medium mb-2">Danh sách điểm theo tổ hợp và lớp</h2>
+        <div class="grid grid-cols-4 gap-4 mb-4">  
+            <div>
+                <select [(ngModel)]="grade" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                </select>
+            </div>
+            <div>
+                <select [(ngModel)]="group" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option value="A00">A00</option>
+                <option value="A01">A01</option>
+                <option value="A02">A02</option>
+                <option value="B00">B00</option>
+                <option value="B01">B01</option>
+                <option value="B02">B02</option>
+                </select>
+            </div>
+            <div>
+                <button class="px-4 py-2 rounded-lg bg-blue-400 text-white" (click)="changGroupGrade()">Xem</button>
+            </div>
+        </div>
+        <table class="w-full">
+            <thead>
+                <tr>
+                    <th [width]="50">STT</th>
+                    <th> Mã học sinh</th>
+                    <th [width]="80">Toán</th>
+                    <th [width]="80">Hóa</th>
+                    <th [width]="80">Anh</th>
+                    <th [width]="80">Lí</th>
+                    <th [width]="80">Sinh</th>
+                    <th [width]="80">Văn</th>
+                    <th [width]="80">Địa</th>
+                    <th [width]="80">Sử</th>
+                    <th [width]="80">GDCD</th>
+                    <th [width]="100">Công nghệ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of listscore; let i = index">
+                    <td>{{i + 1}}</td>
+                    <td>{{item.mahocsinh}}</td>
+                    <td>{{item.Toan}}</td>
+                    <td>{{item.Hoa}}</td>
+                    <td>{{item.Ngoai_Ngu}}</td>
+                    <td>{{item.Li}}</td>
+                    <td>{{item.Sinh}}</td>
+                    <td>{{item.Van}}</td>
+                    <td>{{item.Dia}}</td>
+                    <td>{{item.Su}}</td>
+                    <td>{{item.GDCD}}</td>
+                    <td>{{item.Cong_Nghe}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

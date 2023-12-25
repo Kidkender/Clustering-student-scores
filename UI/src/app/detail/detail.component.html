@@ -1,0 +1,136 @@
+<div class="w-full bg-blue-50 h-auto p-8">
+    <div class="h-full w-full bg-white rounded-md p-8">
+        <h4 class="text-xl font-medium mb-2">Bảng điểm các môn:</h4>
+        <table class="w-full">
+            <thead>
+                <tr>
+                    <th [width]="120">MSSV</th>
+                    <th>Kỳ</th>
+                    <th>Toán</th>
+                    <th>Văn</th>
+                    <th>Ngoại ngữ</th>
+                    <th>Hóa</th>
+                    <th>Lý</th>
+                    <th>Sinh</th>
+                    <th>Địa</th>
+                    <th>Sử</th>
+                    <th>GDCD</th>
+                    <th>Công nghệ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of subject">
+                    <td>{{item.mahocsinh}}</td>
+                    <td>{{item.Ky}}</td>
+                    <td>{{item.Toan}}</td>
+                    <td>{{item.Van}}</td>
+                    <td>{{item.Ngoai_Ngu}}</td>
+                    <td>{{item.Hoa}}</td>
+                    <td>{{item.Li}}</td>
+                    <td>{{item.Sinh}}</td>
+                    <td>{{item.Dia}}</td>
+                    <td>{{item.Su}}</td>
+                    <td>{{item.GDCD}}</td>
+                    <td>{{item.Cong_Nghe}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="h-full w-full bg-white rounded-md px-8 pt-0 pb-8 ">
+        <h4 class="text-xl font-medium mb-2">Tổng kết học tập:</h4>
+        <table class="w-full">
+            <thead>
+                <tr>
+                    <th [width]="120">MSSV</th>
+                    <th>Kỳ</th>
+                    <th>Điểm tổng kết</th>
+                    <th>Hạnh kiểm</th>
+                    <th>Học lực</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of point">
+                    <td>{{item.MaHocSinh}}</td>
+                    <td>{{item.Ky}}</td>
+                    <td>{{item.DiemTongKet}}</td>
+                    <td>{{item.HanhKiem}}</td>
+                    <td>{{item.HocLuc}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="grid-cols-2 grid gap-4 mt-4 h-auto">
+        <div class="h-auto w-full bg-white rounded-md p-8 grid-cols-2 grid gap-2">
+            <div>
+                <select [(ngModel)]="grade" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option value="" selected>Chọn khối</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                </select>
+            </div>
+            <div>
+                <button class="px-4 py-2 rounded-lg bg-blue-400 text-white" (click)="changTop5()">Xem</button>
+            </div>
+            <div class="col-span-2">
+                <h4 class="text-xl font-medium mb-2">Top 5 môn học:</h4>
+                <table class="w-full">
+                    <thead>
+                        <tr>
+                            <th>Top</th>
+                            <th>Môn học</th>
+                            <th>Điểm</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of subjecttop5; let i = index">
+                            <td>{{i + 1}}</td>
+                            <td>{{item.subject}}</td>
+                            <td>{{item.value}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 class="text-xl font-medium my-2">Tổ hợp môn có thể đăng ký:</h4>
+                <table class="w-full">
+                    <tbody>
+                        <tr>
+                            <td *ngFor="let item of findgroup; let i = index">{{item}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 class="text-xl font-medium my-2">Tổ hợp theo cấp độ:</h4>
+                <p>Cấp độ 1: <b>{{recommendLV1}}</b> </p>
+                <p>Cấp độ 2: <b>{{recommendLV2}}</b> </p>
+                <p>Cấp độ 3: <b>{{recommendLV3}}</b> </p>
+            </div>
+        </div>
+        <div class="h-full w-full bg-white rounded-md p-8">
+            <div class="col-span-2">
+                <h4 class="text-xl font-medium mb-2">Top 10 tổ hợp môn:</h4>
+                <table class="w-full">
+                    <thead>
+                        <tr>
+                            <th>Top</th>
+                            <th>Môn học 1</th>
+                            <th>Môn học 2</th>
+                            <th>Môn học 3</th>
+                            <th class="text-red-600">{{groupsubject}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of grouptop10; let i = index">
+                            <td>{{i + 1}}</td>
+                            <td>{{item[0]}}</td>
+                            <td>{{item[1]}}</td>
+                            <td>{{item[2]}}</td>
+                            <th><button (click)="reverse(item[0]+','+item[1]+','+item[2])">Xem</button></th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
