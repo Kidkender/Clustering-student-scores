@@ -17,7 +17,11 @@ from model.request.ApiRequest import (
     SubjectGradeReq,
     SubjectSemesterReq
 )
-from errors.error_exception import error_response
+from errors.error_exception import (
+    CustomException,
+    NoDataAvailableException
+)
+
 from handle.cluster import cluster_data
 from handle.recommendations import (
     create_groupSubject_From_Top5,
@@ -84,7 +88,7 @@ def register_api_routes(app, api):
 
         req = SubjectSemesterReq(request.args)
         if not req.is_valid():
-            return error_response("Invalid or missing parameter!", 400)
+            return CustomException("Invalid or missing parameter!", 400)
 
         result = get_score_subject_semester(req.subject, req.semester)
 
@@ -114,7 +118,7 @@ def register_api_routes(app, api):
         api_request = SubjectGradeReq(request.args)
 
         if not api_request.is_valid():
-            return error_response("Invalid or missing parameter!", 400)
+            return CustomException("Invalid or missing parameter!", 400)
 
         result = get_data_grade(api_request.subject, api_request.grade)
 
@@ -132,7 +136,7 @@ def register_api_routes(app, api):
         api_request = SemesterClusterReq(request.args)
 
         if not api_request.is_valid():
-            return error_response("Invalid or missing parameter!", 400)
+            return CustomException("Invalid or missing parameter!", 400)
 
         result = get_score_Avg_Semester(api_request.semester)
         cluster_centers, labels, clustered_data = cluster_data(
@@ -148,7 +152,7 @@ def register_api_routes(app, api):
         api_request = GradeClusterReq(request.args)
 
         if not api_request.is_valid():
-            return error_response("Invalid or missing parameter!", 400)
+            return CustomException("Invalid or missing parameter!", 400)
         result = get_score_Avg_year(api_request.grade)
 
         cluster_centers, labels, clustered_data = cluster_data(
@@ -164,7 +168,7 @@ def register_api_routes(app, api):
         api_request = GradeStudentReq(request.args)
 
         if not api_request.is_valid():
-            return error_response("Invalid or missing parameter!", 400)
+            return CustomException("Invalid or missing parameter!", 400)
 
         result = get_Subject_From_Top5Avg(
             int(api_request.grade), api_request.student_code)
@@ -250,6 +254,7 @@ def register_api_routes(app, api):
             score = get_score_by_semester(semester)
             return self.handle_data_response(api, score)
 
+    api.errorhandler(NoDataAvailableException)
     api.add_resource(StudentsResource, '/api/students')
     api.add_resource(StudentResource, '/api/students/<code_student>')
     api.add_resource(RateByIdResource, "/api/rate/<string:code_student>")
