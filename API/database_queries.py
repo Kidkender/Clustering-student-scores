@@ -64,7 +64,7 @@ def get_Score_Group(group, grade):
     else:
         return None
 
-    query = f"SELECT MaHocSinh, {subject_1},{subject_2},{subject_3} FROM diem where ky='{semester}'"
+    query = f"SELECT d.MaHocSinh, TenHocSinh, {subject_1},{subject_2},{subject_3} FROM diem d, hocsinh h where d.mahocsinh = h.mahocsinh and ky='{semester}'"
     return execute_query(query)
 
 
@@ -114,12 +114,12 @@ def get_student_by_id(id):
 
 
 def get_score_by_student_id(id):
-    query = f"Select * from  diem d where d.MaHocSinh = {id}"
+    query = f"Select * from  diem d, hocsinh h where d.mahocsinh = h.mahocsinh and d.MaHocSinh = {id}"
     return execute_query(query)
 
 
 def get_rate_by_student_id(id):
-    query = f"SELECT * FROM KetQuaDanhGia WHERE MaHocSinh = {id}"
+    query = f"SELECT * FROM KetQuaDanhGia k, hocsinh h WHERE k.mahocsinh = h.mahocsinh and k.MaHocSinh = {id}"
     return execute_query(query)
 
 

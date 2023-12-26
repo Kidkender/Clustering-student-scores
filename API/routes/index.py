@@ -21,6 +21,7 @@ from errors.error_exception import (
     CustomException,
     NoDataAvailableException
 )
+from errors.error_exception import DatabaseConnectionError
 
 from handle.cluster import cluster_data
 from handle.recommendations import (
@@ -254,7 +255,18 @@ def register_api_routes(app, api):
             score = get_score_by_semester(semester)
             return self.handle_data_response(api, score)
 
-    api.errorhandler(NoDataAvailableException)
+    @app.errorhandler(DatabaseConnectionError)
+    def handle_database_connection_error(error):
+        response = jsonify({"error": str(error)})
+        response.status_code = 500
+        return response
+
+    @app.errorhandler(NoDataAvailableException)
+    def handle_no_data_available_error(error):
+        response = jsonify({"error": str(error)})
+        response.status_code = 404
+        return response
+
     api.add_resource(StudentsResource, '/api/students')
     api.add_resource(StudentResource, '/api/students/<code_student>')
     api.add_resource(RateByIdResource, "/api/rate/<string:code_student>")

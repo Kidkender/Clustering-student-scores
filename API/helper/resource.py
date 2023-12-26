@@ -1,4 +1,5 @@
-from flask_restx import Resource, abort, fields
+from flask_restx import Resource
+from errors.error_exception import NoDataAvailableException
 
 
 class ResourceHelper(Resource):
@@ -7,4 +8,4 @@ class ResourceHelper(Resource):
         if not data.empty:
             return data.to_dict(orient="records")
         else:
-            abort(404, message="No data available")
+            raise NoDataAvailableException()

@@ -8,9 +8,8 @@ class CustomException(Exception):
 
 
 class NoDataAvailableException(Exception):
-    def __init__(self, message="No data available", status_code=404):
+    def __init__(self, message="No data available."):
         self.message = message
-        self.status_code = status_code
         super().__init__(message)
 
 
