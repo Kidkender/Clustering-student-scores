@@ -1,0 +1,6 @@
+ERROR_CONNECTION_DATABASE_FAILED = "Connection to database failed"
+ERROR_VALIDATE_CODE_STUDENT_IS_REQUIRED = "Code student is required"
+ERROR_VALIDATE_N_CLUSTER_IS_REQUIRED = "n is required"
+ERROR_VALIDATE_GRADE_IS_REQUIRED = "Grade is required"
+ERROR_CODE_STUDENT_INVALID = "Code student is invalid"
+ERROR_GRADE_INVALID = "Grade invalid"

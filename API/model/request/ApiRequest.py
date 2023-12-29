@@ -52,7 +52,7 @@ class GradeGroupReq:
 
 class GradeStudentReq:
     def __init__(self, args):
-        self.grade = is_grade_valid(int(args.get('grade')))
+        self.grade = int(args.get('grade'))
         self.student_code = args.get('student_code')
 
     def is_valid(self):

@@ -11,7 +11,7 @@ class ApirResponse:
                 "cluster_centers": self.result_cluster[0].tolist(),
                 "labels": self.result_cluster[1].tolist(),
                 "clustered_data": self.result_cluster[2].tolist(),
-                "cluster_count": self.result_cluster[3].tolist(),
+                "cluster_count": [int(x) for x in self.result_cluster[3]],
             }
         return response_dict
 
@@ -23,7 +23,6 @@ class ApirResponse:
                 "cluster_centers": self.result_cluster[0].tolist(),
                 "labels": self.result_cluster[1].tolist(),
                 "clustered_data": self.result_cluster[2].tolist(),
-                # "cluster_count":  self.result_cluster[3].tolist()
                 "cluster_count":  [int(x) for x in self.result_cluster[3]]
             }
         return response_dict

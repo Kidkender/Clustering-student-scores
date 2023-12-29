@@ -8,7 +8,7 @@ class Subject(Enum):
     SINH = "Sinh"
     LICH_SU = "Su"
     DIA_LY = "Dia"
-    TIENG_ANH = "Ngoai_ngu"
+    TIENG_ANH = "Ngoai_Ngu"
     VAN = "Van"
     GDCD = "GDCD"
     KHXH = "Khoa học xã hội"
@@ -107,8 +107,15 @@ def get_combination_by_subjects(subject1, subject2, subject3):
     return None
 
 
-# result = get_combination_by_subjects("Toan", "Hoa", "Li")
-# if result:
-#     print(f"The combination for subjects 'Toan', 'Ly', 'Hoa' is: {result}")
-# else:
-#     print("No matching combination found.")
+def get_combinations_with_subjects(subject1, subject2):
+
+    subject1 = Subject(subject1)
+    subject2 = Subject(subject2)
+    valid_combinations = set()
+
+    for combination_list in combination_mapping.values():
+        for combination in combination_list:
+            if subject1 in combination.value and subject2 in combination.value:
+                valid_combinations.add(combination.name)
+
+    return list(valid_combinations)

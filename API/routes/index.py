@@ -203,11 +203,14 @@ def register_api_routes(app, api):
     def api_create_group_subject_from_top5():
         try:
             student_code = request.args.get("student_code")
+            grade = request.args.get("grade")
 
             if student_code is None:
                 return jsonify({"error": "Missing student code parameter"}, 400)
 
-            result = create_groupSubject_From_Top5(student_code)
+            list_3, list_2 = create_groupSubject_From_Top5(student_code, grade)
+
+            result = list_3 if len(list_3) > 0 else list_2
             return jsonify(result), 200
 
         except Exception as e:
@@ -238,8 +241,11 @@ def register_api_routes(app, api):
         if code_student is None:
             return jsonify({"error": "Missing 'code_student' parameter"}), 400
 
-        result = find_group_subject(code_student, option)
-        return jsonify({"result": result})
+        result, label = find_group_subject(code_student, option)
+        return jsonify({
+            "type recommend": label,
+            "result": result
+        })
 
     @app.route('/api/recommend_group', methods=['GET'])
     def api_recommend_group():
@@ -249,8 +255,11 @@ def register_api_routes(app, api):
         if code_student is None:
             return jsonify({"error": "Missing 'code_student' parameter"}), 400
 
-        result = recommend_group(code_student, option_recommend)
-        return jsonify({"result": result})
+        result, label = recommend_group(code_student, option_recommend)
+        return jsonify({
+            "type recommend": label,
+            "result": result
+        })
 
     class ScoreSemesterResource(ResourceHelper):
         @api.marshal_with(score_model)
