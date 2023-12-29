@@ -34,4 +34,4 @@ def cluster_data(data, n_clusters):
 
     cluster_centers = kmeans.cluster_centers_
 
-    return cluster_centers, labels, data
+    return cluster_centers, labels, data, cluster_counts

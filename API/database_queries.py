@@ -68,8 +68,7 @@ def get_Score_Group(group, grade):
     return execute_query(query)
 
 
-def get_Subject_From_Top5Avg(grade, student_code):
-    semester = Last_Semester_Of_Grade(grade)
+def get_Subject_From_Top5Avg(semester, student_code):
     query = f"""
             Select  top 5 value,subject from (
                 Select Toan as value,subject='Toan' from diem where mahocsinh='{student_code}' and ky ={semester}
@@ -86,7 +85,7 @@ def get_Subject_From_Top5Avg(grade, student_code):
                 Union
                 Select Dia as value ,subject='Dia' from diem where mahocsinh='{student_code}' and ky ={semester}
                 Union
-                Select Ngoai_Ngu as value ,subject='Ngoai_Dgu' from diem where mahocsinh='{student_code}' and ky ={semester}
+                Select Ngoai_Ngu as value ,subject='Ngoai_Ngu' from diem where mahocsinh='{student_code}' and ky ={semester}
             ) as t
             order by value desc
         """

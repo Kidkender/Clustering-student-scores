@@ -30,7 +30,6 @@ class Combination(Enum):
     B02 = [Subject.TOAN, Subject.SINH, Subject.DIA_LY]
     B03 = [Subject.TOAN, Subject.SINH, Subject.VAN]
     B04 = [Subject.TOAN, Subject.SINH, Subject.GDCD]
-    B05 = [Subject.TOAN, Subject.SINH, Subject.KHXH]
     C00 = [Subject.VAN, Subject.LICH_SU, Subject.DIA_LY]
     C01 = [Subject.VAN, Subject.TOAN, Subject.LY]
     C02 = [Subject.VAN, Subject.TOAN, Subject.HOA]
@@ -43,15 +42,15 @@ class Combination(Enum):
 combination_mapping = {
     Subject.TOAN: [Combination.A00, Combination.A01, Combination.A02, Combination.A03, Combination.A04,
                    Combination.A05, Combination.B00, Combination.B01, Combination.B02, Combination.B03,
-                   Combination.B04, Combination.B05, Combination.C00, Combination.C01, Combination.C02,
+                   Combination.B04, Combination.C00, Combination.C01, Combination.C02,
                    Combination.C03, Combination.C04, Combination.C05, Combination.D01],
     Subject.LY: [Combination.A00, Combination.A01, Combination.A02, Combination.A03, Combination.A04,
                  Combination.A05, Combination.B00, Combination.B01, Combination.B02, Combination.B03,
-                 Combination.B04, Combination.B05, Combination.C01, Combination.C02, Combination.C05],
+                 Combination.B04, Combination.C01, Combination.C02, Combination.C05],
     Subject.HOA: [Combination.A00, Combination.A02, Combination.A04, Combination.A05, Combination.B00,
-                  Combination.B02, Combination.B05, Combination.C02, Combination.C05],
+                  Combination.B02, Combination.C02, Combination.C05],
     Subject.SINH: [Combination.A02, Combination.B00, Combination.B02, Combination.B03, Combination.B04,
-                   Combination.B05],
+                   ],
     Subject.LICH_SU: [Combination.A03, Combination.A05, Combination.B01, Combination.B03, Combination.C00,
                       Combination.C03],
     Subject.DIA_LY: [Combination.A04, Combination.B02, Combination.B04, Combination.C00, Combination.C04],
@@ -59,12 +58,14 @@ combination_mapping = {
     Subject.VAN: [Combination.C00, Combination.C01, Combination.C02, Combination.C03, Combination.C04,
                   Combination.C05, Combination.D01],
     Subject.GDCD: [Combination.B04],
-    Subject.KHXH: [Combination.B05],
-
 }
 
 
+def get_list_group_subject():
+    return list(Combination.__members__.keys())
+
 # print(Combination.A01.value)
+
 
 def find_keys(enum_class, value):
     keys = []
@@ -77,6 +78,12 @@ def find_keys(enum_class, value):
 all_combination_keys = list(Combination.__members__.keys())
 all_subject_keys = list(Subject.__members__.keys())
 
+"""_summary_
+    Get combination
+    @param: string of name combination name
+    Example "A01" "B01"
+"""
+
 
 def get_subject_values(combination_str):
     try:
@@ -86,6 +93,22 @@ def get_subject_values(combination_str):
         return None
 
 
-values_of_A01 = get_subject_values('A02')
+values_of_A01 = get_subject_values('A00')
 
 # print(values_of_A01)
+
+
+def get_combination_by_subjects(subject1, subject2, subject3):
+    subjects = [subject1.lower(), subject2.lower(), subject3.lower()]
+    for combination in Combination:
+        if set(subject.value.lower() for subject in combination.value) == set(subjects):
+            return combination.name
+
+    return None
+
+
+# result = get_combination_by_subjects("Toan", "Hoa", "Li")
+# if result:
+#     print(f"The combination for subjects 'Toan', 'Ly', 'Hoa' is: {result}")
+# else:
+#     print("No matching combination found.")

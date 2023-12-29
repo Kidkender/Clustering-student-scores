@@ -26,7 +26,7 @@ from errors.error_exception import DatabaseConnectionError
 from handle.cluster import cluster_data
 from handle.recommendations import (
     create_groupSubject_From_Top5,
-    reverse_group_subject,
+
     find_group_subject,
     recommend_group)
 from model.response.index import ApirResponse
@@ -39,6 +39,7 @@ from database_queries import (
     get_rate_by_student_id,
     get_score_by_semester
 )
+from model.enum import subject
 from model.response.student import student_model
 from model.response.rate import rate_model
 from model.response.score import score_model
@@ -93,11 +94,11 @@ def register_api_routes(app, api):
 
         result = get_score_subject_semester(req.subject, req.semester)
 
-        cluster_centers, labels, clustered_data = cluster_data(
+        cluster_centers, labels, clustered_data, cluster_count = cluster_data(
             result, req.n_clusters)
 
         api_response = ApirResponse(
-            result, (cluster_centers, labels, clustered_data))
+            result, (cluster_centers, labels, clustered_data, cluster_count))
 
         return jsonify(api_response.to_dict_records())
 
@@ -123,12 +124,11 @@ def register_api_routes(app, api):
 
         result = get_data_grade(api_request.subject, api_request.grade)
 
-        print(result)
-        cluster_centers, labels, clustered_data = cluster_data(
+        cluster_centers, labels, clustered_data, cluster_count = cluster_data(
             result["Score_Avg"], api_request.n_clusters)
 
         api_response = ApirResponse(
-            result, (cluster_centers, labels, clustered_data))
+            result, (cluster_centers, labels, clustered_data, cluster_count))
 
         return jsonify(api_response.to_dict_records())
 
@@ -140,11 +140,11 @@ def register_api_routes(app, api):
             return CustomException("Invalid or missing parameter!", 400)
 
         result = get_score_Avg_Semester(api_request.semester)
-        cluster_centers, labels, clustered_data = cluster_data(
+        cluster_centers, labels, clustered_data, cluster_count = cluster_data(
             result, api_request.n_clusters)
 
         api_response = ApirResponse(
-            result, (cluster_centers, labels, clustered_data))
+            result, (cluster_centers, labels, clustered_data, cluster_count))
 
         return jsonify(api_response.to_dict())
 
@@ -156,11 +156,11 @@ def register_api_routes(app, api):
             return CustomException("Invalid or missing parameter!", 400)
         result = get_score_Avg_year(api_request.grade)
 
-        cluster_centers, labels, clustered_data = cluster_data(
+        cluster_centers, labels, clustered_data, cluster_count = cluster_data(
             result, api_request.n_clusters)
 
         api_response = ApirResponse(
-            result, (cluster_centers, labels, clustered_data))
+            result, (cluster_centers, labels, clustered_data, cluster_count))
 
         return jsonify(api_response.to_dict())
 
@@ -184,13 +184,14 @@ def register_api_routes(app, api):
             if data is None or n_clusters is None:
                 return jsonify({"error": "Invalid or missing parameters"}), 400
 
-            cluster_centers, labels, clustered_data = cluster_data(
+            cluster_centers, labels, clustered_data, cluster_count = cluster_data(
                 data, n_clusters)
 
             result = {
                 "cluster_centers": cluster_centers.tolist(),
                 "labels": labels.tolist(),
-                "clustered_data": clustered_data.tolist()
+                "clustered_data": clustered_data.tolist(),
+                "cluster_count": cluster_count.tolist(),
             }
 
             return jsonify(result), 200
@@ -222,7 +223,7 @@ def register_api_routes(app, api):
             subjects = list(subjects.split(','))
             capitalized_subjects = [subject.capitalize()
                                     for subject in subjects]
-            result = reverse_group_subject(capitalized_subjects)
+            result = subject.get_combination_by_subjects(capitalized_subjects)
 
             return jsonify({"result": result}), 200 if result else 404
 
@@ -232,21 +233,23 @@ def register_api_routes(app, api):
     @app.route('/api/find_group_subject', methods=['GET'])
     def api_find_group_subject():
         code_student = request.args.get('code_student')
+        option = request.args.get('option')
 
         if code_student is None:
             return jsonify({"error": "Missing 'code_student' parameter"}), 400
 
-        result = find_group_subject(code_student)
+        result = find_group_subject(code_student, option)
         return jsonify({"result": result})
 
     @app.route('/api/recommend_group', methods=['GET'])
     def api_recommend_group():
         code_student = request.args.get('code_student')
+        option_recommend = request.args.get('option')
 
         if code_student is None:
             return jsonify({"error": "Missing 'code_student' parameter"}), 400
 
-        result = recommend_group(code_student)
+        result = recommend_group(code_student, option_recommend)
         return jsonify({"result": result})
 
     class ScoreSemesterResource(ResourceHelper):
