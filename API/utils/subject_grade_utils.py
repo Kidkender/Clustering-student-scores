@@ -1,5 +1,6 @@
 
 def get_semester_grade(grade):
+    print(grade)
     if grade == 10:
         semester_1 = 1
         semester_2 = 2

@@ -1,4 +1,4 @@
-from flask import jsonify, request
+from flask import jsonify, request, json
 from database_queries import (
     get_data_grade,
     get_score_Avg_Semester,
@@ -46,6 +46,7 @@ from model.response.score import score_model
 from helper.resource import ResourceHelper
 from model.request.score_group import scoreRequest
 from flask_restx import Resource
+from utils import subject_grade_utils
 
 
 def register_api_routes(app, api):
@@ -170,9 +171,10 @@ def register_api_routes(app, api):
 
         if not api_request.is_valid():
             return CustomException("Invalid or missing parameter!", 400)
+        semester1, semester2 = subject_grade_utils.get_semester_grade(
+            api_request.grade)
+        result = get_Subject_From_Top5Avg(semester2, api_request.student_code)
 
-        result = get_Subject_From_Top5Avg(
-            int(api_request.grade), api_request.student_code)
         return jsonify(result.to_dict(orient='records'))
 
     @app.route('/api/cluster_by_subject', methods=['POST'])
@@ -202,13 +204,16 @@ def register_api_routes(app, api):
     @app.route("/api/create_group_subject_from_top5", methods=["POST"])
     def api_create_group_subject_from_top5():
         try:
-            student_code = request.args.get("student_code")
-            grade = request.args.get("grade")
 
-            if student_code is None:
-                return jsonify({"error": "Missing student code parameter"}, 400)
+            api_request = GradeStudentReq(request.args)
 
-            list_3, list_2 = create_groupSubject_From_Top5(student_code, grade)
+            if not api_request.is_valid():
+                return CustomException("Invalid or missing parameter!", 400)
+            semester1, semester2 = subject_grade_utils.get_semester_grade(
+                api_request.grade)
+
+            list_3, list_2 = create_groupSubject_From_Top5(
+                api_request.student_code, semester2)
 
             result = list_3 if len(list_3) > 0 else list_2
             return jsonify(result), 200
@@ -226,7 +231,6 @@ def register_api_routes(app, api):
             subjects = list(subjects.split(','))
             capitalized_subjects = [subject.capitalize()
                                     for subject in subjects]
-            print(capitalized_subjects)
             result = subject.get_combination_by_subjects(*capitalized_subjects)
 
             return jsonify({"result": result}), 200 if result else 404

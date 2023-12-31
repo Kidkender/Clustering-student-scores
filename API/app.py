@@ -1,5 +1,5 @@
 from routes.index import register_api_routes
-from flask import Flask
+from flask import Flask, json
 from flask_restx import Api
 from flask_cors import CORS
 

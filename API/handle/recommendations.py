@@ -5,10 +5,10 @@ import constant
 from handle import score
 
 
-def create_groupSubject_From_Top5(student_code, grade):
+def create_groupSubject_From_Top5(student_code, semester):
     list_group_3 = []
     list_group_2 = []
-    top_5_subject_Avg = get_Subject_From_Top5Avg(grade, student_code)
+    top_5_subject_Avg = get_Subject_From_Top5Avg(semester, student_code)
 
     combinations_3 = list(combinations(
         top_5_subject_Avg["subject"].to_numpy(), 3))
