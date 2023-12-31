@@ -1,14 +1,14 @@
 from itertools import combinations
 from database_queries import get_Subject_From_Top5Avg
 from model.enum import semester, subject, group_type
+import constant
+from handle import score
 
 
 def create_groupSubject_From_Top5(student_code, grade):
     list_group_3 = []
     list_group_2 = []
     top_5_subject_Avg = get_Subject_From_Top5Avg(grade, student_code)
-
-    print("data:", top_5_subject_Avg)
 
     combinations_3 = list(combinations(
         top_5_subject_Avg["subject"].to_numpy(), 3))
@@ -28,6 +28,11 @@ def find_group_subject(code_student, option):
     label = group_type.Recommend_Type.MAIN_RECOMMEND.value
     value = semester.get_group_recommend_value(option)
 
+    if value is None:
+        raise Exception("Invalid option")
+
+    if type(value) in (tuple, list):
+        raise Exception("Invalid option")
     listGroup_3, list_group_2 = create_groupSubject_From_Top5(
         code_student, value)
 
@@ -47,11 +52,7 @@ def find_group_subject(code_student, option):
     return list_result, label
 
 
-def calculate_score_muti_grade():
-    return
-
-
-def recommend_group(code_student, option):
+def recommend_single_grade(code_student, option):
     list_result = []
     recommend_level1 = []
     recommend_level2 = []
@@ -66,7 +67,6 @@ def recommend_group(code_student, option):
     listGroup, label = find_group_subject(code_student, option)
     for result in listGroup:
 
-        print("result: ", result)
         if result is not None:
             list_result.append(result)
             last_digit = int(result[-1])
@@ -87,3 +87,20 @@ def recommend_group(code_student, option):
     }
 
     return recommendations, label
+
+
+def recommend_combination(code_student, option):
+    reccommend = ""
+    label = ""
+    grades = semester.get_group_recommend_value(option)
+    if grades is None:
+        raise Exception(constant.ERROR_OPTION_GRADE_INVALID)
+
+    if type(grades) in (tuple, list):
+        print("muti")
+        reccommend, label = score.recommend_muti_grade(code_student, option)
+    else:
+        print("single")
+        reccommend, label = recommend_single_grade(code_student, option)
+
+    return reccommend, label

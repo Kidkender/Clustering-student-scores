@@ -28,7 +28,7 @@ from handle.recommendations import (
     create_groupSubject_From_Top5,
 
     find_group_subject,
-    recommend_group)
+    recommend_combination)
 from model.response.index import ApirResponse
 from database_queries import (
     get_students,
@@ -226,7 +226,8 @@ def register_api_routes(app, api):
             subjects = list(subjects.split(','))
             capitalized_subjects = [subject.capitalize()
                                     for subject in subjects]
-            result = subject.get_combination_by_subjects(capitalized_subjects)
+            print(capitalized_subjects)
+            result = subject.get_combination_by_subjects(*capitalized_subjects)
 
             return jsonify({"result": result}), 200 if result else 404
 
@@ -255,7 +256,7 @@ def register_api_routes(app, api):
         if code_student is None:
             return jsonify({"error": "Missing 'code_student' parameter"}), 400
 
-        result, label = recommend_group(code_student, option_recommend)
+        result, label = recommend_combination(code_student, option_recommend)
         return jsonify({
             "type recommend": label,
             "result": result

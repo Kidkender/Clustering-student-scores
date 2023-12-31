@@ -113,7 +113,7 @@ def get_student_by_id(id):
 
 
 def get_score_by_student_id(id):
-    query = f"Select * from  diem d, hocsinh h where d.mahocsinh = h.mahocsinh and d.MaHocSinh = {id}"
+    query = f"Select h.MaHocSinh, TenHocSinh,Ky, Toan, Li, Hoa,Sinh, Van, Su, Dia, Ngoai_Ngu, GDCD, Cong_Nghe from  diem d, hocsinh h where d.mahocsinh = h.mahocsinh and d.MaHocSinh = {id}"
     return execute_query(query)
 
 

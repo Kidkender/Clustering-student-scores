@@ -11,7 +11,8 @@ class Subject(Enum):
     TIENG_ANH = "Ngoai_Ngu"
     VAN = "Van"
     GDCD = "GDCD"
-    KHXH = "Khoa học xã hội"
+    KHXH = "Khoa học xã hội",
+    CONG_NGHE = "Cong_Nghe"
     TIENG_NGA = "Tieng_Nga"
     TIENG_PHAP = "Tieng_Phap"
     TIENG_TRUNG = "Tieng_Trung"

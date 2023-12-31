@@ -7,7 +7,6 @@ def recommend_muti_grade(code_student, option):
     score_options = semester.get_group_recommend_value(option)
     listScore = get_score_by_student_id(code_student)
 
-    print(score_options)
     filtered_score = listScore[listScore['Ky'].isin(score_options)]
 
     average_scores = filtered_score.groupby(
@@ -22,7 +21,7 @@ def recommend_muti_grade(code_student, option):
 
     recommend = recommend_combination(list_recommend)
 
-    return recommend, label
+    return label, recommend
 
 
 def get_top_5_subjects(average_scores):
@@ -97,3 +96,8 @@ def recommend_combination(listGroup):
     }
 
     return recommendations
+
+
+label, recommend = recommend_muti_grade("1703323069", "GRADE_10_11")
+print(label)
+print(recommend)
