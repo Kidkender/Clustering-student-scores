@@ -24,12 +24,14 @@
         <div class="grid grid-cols-4 gap-4 mb-4">  
             <div>
                 <select [(ngModel)]="grade" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
                 </select>
             </div>
-            <div>
+            <!-- <div>
                 <select [(ngModel)]="group" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option value="A00">A00</option>
                 <option value="A01">A01</option>
@@ -38,7 +40,7 @@
                 <option value="B01">B01</option>
                 <option value="B02">B02</option>
                 </select>
-            </div>
+            </div> -->
             <div>
                 <button class="px-4 py-2 rounded-lg bg-blue-400 text-white" (click)="changGroupGrade()">Xem</button>
             </div>
@@ -48,6 +50,7 @@
                 <tr>
                     <th [width]="50">STT</th>
                     <th> Mã học sinh</th>
+                    <th> Tên học sinh</th>
                     <th [width]="80">Toán</th>
                     <th [width]="80">Hóa</th>
                     <th [width]="80">Anh</th>
@@ -63,7 +66,8 @@
             <tbody>
                 <tr *ngFor="let item of listscore; let i = index">
                     <td>{{i + 1}}</td>
-                    <td>{{item.mahocsinh}}</td>
+                    <td>{{item.MaHocSinh}}</td>
+                    <td>{{item.TenHocSinh}}</td>
                     <td>{{item.Toan}}</td>
                     <td>{{item.Hoa}}</td>
                     <td>{{item.Ngoai_Ngu}}</td>

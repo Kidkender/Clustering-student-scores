@@ -26,11 +26,11 @@ export class DataComponent implements AfterViewInit {
 
   listStudent : any
   listscore : any
-  grade: any = "10"
+  grade: any = "1"
   group: any = "A00"
   
   changGroupGrade(){
-    this.service.getScoreGroup(this.grade, this.group)
+    this.service.getScoreGroupBySemster(this.grade)
     .subscribe({
       next: (re : any) => {
         this.listscore = re

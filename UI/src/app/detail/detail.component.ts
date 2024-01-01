@@ -32,17 +32,10 @@ export class DetailComponent implements AfterViewInit {
       }
     })
 
-    this.service.getAllTop10GroupById(id)
+    this.service.getAllTop10GroupById(id,this.grade)
     .subscribe({
       next: (re : any) => {
         this.grouptop10 = re
-      }
-    })
-
-    this.service.getFindGroupSubject(id)
-    .subscribe({
-      next: (re : any) => {
-        this.findgroup = re.result
       }
     })
 
@@ -52,6 +45,14 @@ export class DetailComponent implements AfterViewInit {
         this.recommendLV1 = re.result.level_1
         this.recommendLV2 = re.result.level_2
         this.recommendLV3 = re.result.level_3
+        this.recommendLOrder = re.result.other_recommend
+      }
+    })
+
+    this.service.getAllTop5SubjectById(this.code, this.grade)
+    .subscribe({
+      next: (re : any) => {
+        this.subjecttop5 = re
       }
     })
   }
@@ -60,19 +61,31 @@ export class DetailComponent implements AfterViewInit {
   subject : any
   point : any
   subjecttop5: any
-  grade : any = ""
+  grade : any = 10
   grouptop10 : any
   groupsubject: any
   findgroup: string[] = []
   recommendLV1: any 
   recommendLV2: any 
   recommendLV3: any 
+  recommendLOrder: any 
+  grade2: any = 'GRADE_10'
 
   changTop5() {
     this.service.getAllTop5SubjectById(this.code, this.grade)
     .subscribe({
       next: (re : any) => {
         this.subjecttop5 = re
+      }
+    })
+  }
+
+  changeFindGroup()
+  {
+    this.service.getFindGroupSubject(this.code,this.grade2)
+    .subscribe({
+      next: (re : any) => {
+        this.findgroup = re.result
       }
     })
   }
