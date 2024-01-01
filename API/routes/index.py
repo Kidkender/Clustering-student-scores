@@ -23,7 +23,7 @@ from errors.error_exception import (
 )
 from errors.error_exception import DatabaseConnectionError
 
-from handle.cluster import cluster_data
+from handle.cluster import cluster_data_kmean
 from handle.recommendations import (
     create_groupSubject_From_Top5,
 
@@ -90,12 +90,15 @@ def register_api_routes(app, api):
     def api_score_subject_semester():
 
         req = SubjectSemesterReq(request.args)
-        if not req.is_valid():
-            return CustomException("Invalid or missing parameter!", 400)
+        # if not req.is_valid():
+        #     return CustomException("Invalid or missing parameter!", 400)
+
+        print(req.subject)
+        print(req.semester)
 
         result = get_score_subject_semester(req.subject, req.semester)
 
-        cluster_centers, labels, clustered_data, cluster_count = cluster_data(
+        cluster_centers, labels, clustered_data, cluster_count = cluster_data_kmean(
             result, req.n_clusters)
 
         api_response = ApirResponse(
@@ -125,7 +128,7 @@ def register_api_routes(app, api):
 
         result = get_data_grade(api_request.subject, api_request.grade)
 
-        cluster_centers, labels, clustered_data, cluster_count = cluster_data(
+        cluster_centers, labels, clustered_data, cluster_count = cluster_data_kmean(
             result["Score_Avg"], api_request.n_clusters)
 
         api_response = ApirResponse(
@@ -141,7 +144,7 @@ def register_api_routes(app, api):
             return CustomException("Invalid or missing parameter!", 400)
 
         result = get_score_Avg_Semester(api_request.semester)
-        cluster_centers, labels, clustered_data, cluster_count = cluster_data(
+        cluster_centers, labels, clustered_data, cluster_count = cluster_data_kmean(
             result, api_request.n_clusters)
 
         api_response = ApirResponse(
@@ -157,7 +160,7 @@ def register_api_routes(app, api):
             return CustomException("Invalid or missing parameter!", 400)
         result = get_score_Avg_year(api_request.grade)
 
-        cluster_centers, labels, clustered_data, cluster_count = cluster_data(
+        cluster_centers, labels, clustered_data, cluster_count = cluster_data_kmean(
             result, api_request.n_clusters)
 
         api_response = ApirResponse(
@@ -186,7 +189,7 @@ def register_api_routes(app, api):
             if data is None or n_clusters is None:
                 return jsonify({"error": "Invalid or missing parameters"}), 400
 
-            cluster_centers, labels, clustered_data, cluster_count = cluster_data(
+            cluster_centers, labels, clustered_data, cluster_count = cluster_data_kmean(
                 data, n_clusters)
 
             result = {

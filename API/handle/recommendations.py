@@ -97,10 +97,8 @@ def recommend_combination(code_student, option):
         raise Exception(constant.ERROR_OPTION_GRADE_INVALID)
 
     if type(grades) in (tuple, list):
-        print("muti")
         reccommend, label = score.recommend_muti_grade(code_student, option)
     else:
-        print("single")
         reccommend, label = recommend_single_grade(code_student, option)
 
     return reccommend, label

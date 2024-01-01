@@ -16,8 +16,8 @@ def get_semester_grade(grade):
 
 
 def is_subject_valid(subject):
-    allowed_subjects = ["toan", "ly", "van", "anh", "sinh",
-                        "su", "su", "dia", "ly", "hoa", "ngoai_ngu"]
+    allowed_subjects = ["toan", "van", "anh", "sinh",
+                        "su", "su", "dia", "li", "hoa", "ngoai_ngu", "cong_nghe"]
     if subject.lower() in allowed_subjects:
         return subject.lower()
     else:

@@ -17,7 +17,8 @@ def execute_query(query):
 
 def get_score_subject_semester(subject, semester):
     query = f"SELECT {subject} FROM diem where ky='{semester}'"
-    return execute_query(query)
+    data = execute_query(query)
+    return data
 
 
 def get_data_grade(subject, grade):
