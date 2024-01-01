@@ -20,7 +20,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let item of subject">
-                    <td>{{item.mahocsinh}}</td>
+                    <td>{{item.MaHocSinh}}</td>
                     <td>{{item.Ky}}</td>
                     <td>{{item.Toan}}</td>
                     <td>{{item.Van}}</td>
@@ -93,6 +93,19 @@
                 </table>
 
                 <h4 class="text-xl font-medium my-2">Tổ hợp môn có thể đăng ký:</h4>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <select [(ngModel)]="grade2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="" selected>Chọn khối</option>
+                        <option value="GRADE_10">10</option>
+                        <option value="GRADE_11">11</option>
+                        <option value="GRADE_12">12</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button class="px-4 py-2 rounded-lg bg-blue-400 text-white" (click)="changeFindGroup()">Xem</button>
+                    </div>
+                </div>
                 <table class="w-full">
                     <tbody>
                         <tr>
@@ -102,14 +115,31 @@
                 </table>
 
                 <h4 class="text-xl font-medium my-2">Tổ hợp theo cấp độ:</h4>
-                <p>Cấp độ 1: <b>{{recommendLV1}}</b> </p>
-                <p>Cấp độ 2: <b>{{recommendLV2}}</b> </p>
-                <p>Cấp độ 3: <b>{{recommendLV3}}</b> </p>
+                <table class="w-full">
+                    <tbody>
+                        <tr>
+                            <td [width]="200" class="bg-blue-100">Cấp độ 1:  </td>
+                            <td><b>{{recommendLV1}}</b></td>
+                        </tr>
+                        <tr>
+                            <td class="bg-blue-100">Cấp độ 2: </td>
+                            <td><b>{{recommendLV2}}</b> </td>
+                        </tr>
+                        <tr>
+                            <td class="bg-blue-100">Cấp độ 3:  </td>
+                            <td><b>{{recommendLV3}}</b></td>
+                        </tr>
+                        <tr>
+                            <td class="bg-blue-100">Cấp độ khác:  </td>
+                            <td><b>{{recommendLOrder}}</b></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
         <div class="h-full w-full bg-white rounded-md p-8">
             <div class="col-span-2">
-                <h4 class="text-xl font-medium mb-2">Top 10 tổ hợp môn:</h4>
+                <h4 class="text-xl font-medium mb-2">Top 5 tổ hợp môn:</h4>
                 <table class="w-full">
                     <thead>
                         <tr>

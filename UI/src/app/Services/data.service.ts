@@ -28,23 +28,31 @@ export class APIservicesService {
       return this.http.get<any>(this.baseApiUrl + "/api/get_Subject_From_Top5Avg?grade="+sem+"&student_code="+id)
     }
 
-    getAllTop10GroupById(id: any): any {
-      return this.http.post<any>(this.baseApiUrl + "/api/create_group_subject_from_top5?student_code="+id, id)
+    getAllTop10GroupById(id: any, grade: any): any {
+      return this.http.post<any>(this.baseApiUrl + "/api/create_group_subject_from_top5?student_code="+id+"&grade="+grade, id)
     }
 
     getGroupBy3Subject(id: any): any {
       return this.http.post<any>(this.baseApiUrl + "/api/reverse_group_subject?subjects="+id, id)
     }
 
-    getFindGroupSubject(id:any) {
-      return this.http.get<any>(this.baseApiUrl + "/api/find_group_subject?code_student="+id)
+    getFindGroupSubject(id:any, option: any) {
+      return this.http.get<any>(this.baseApiUrl + "/api/find_group_subject?code_student="+id+"&option="+option)
     }
 
     getRecommendGroup(id:any) {
-      return this.http.get<any>(this.baseApiUrl + "/api/recommend_group?code_student="+id)
+      return this.http.get<any>(this.baseApiUrl + "/api/recommend_group?code_student="+id+"&option=GRADE_10_11_12")
     }
 
     getScoreGroup(grade: any, group: any){
       return this.http.get<any>(this.baseApiUrl + "/api/get_Score_Group?group="+group+"&grade="+grade)
+    }
+
+    getScoreGroupBySemster(grade: any){
+      return this.http.get<any>(this.baseApiUrl + "/api/scores/"+grade)
+    }
+
+    getClusterScoreSubjectSemester(subject : any, semester: any, n_cluster: any){
+      return this.http.get<any>(this.baseApiUrl + "/api/score-subject-semester?subject="+subject+"&semester="+semester+"&n="+n_cluster)
     }
 }
