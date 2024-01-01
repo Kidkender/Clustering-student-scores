@@ -1,4 +1,4 @@
-from flask import jsonify, request, json
+from flask import jsonify, request, json, render_template
 from database_queries import (
     get_data_grade,
     get_score_Avg_Semester,
@@ -23,7 +23,7 @@ from errors.error_exception import (
 )
 from errors.error_exception import DatabaseConnectionError
 
-from handle.cluster import cluster_data_kmean
+from handle.cluster import cluster_data_kmean, cluster_by_semester, visualize_comparison
 from handle.recommendations import (
     create_groupSubject_From_Top5,
 
@@ -39,7 +39,7 @@ from database_queries import (
     get_rate_by_student_id,
     get_score_by_semester
 )
-from model.enum import subject
+from enumeration import subject
 from model.response.student import student_model
 from model.response.rate import rate_model
 from model.response.score import score_model
@@ -90,8 +90,8 @@ def register_api_routes(app, api):
     def api_score_subject_semester():
 
         req = SubjectSemesterReq(request.args)
-        # if not req.is_valid():
-        #     return CustomException("Invalid or missing parameter!", 400)
+        if not req.is_valid():
+            return CustomException("Invalid or missing parameter!", 400)
 
         print(req.subject)
         print(req.semester)
@@ -268,6 +268,29 @@ def register_api_routes(app, api):
             "type recommend": label,
             "result": result
         })
+
+    @app.route("/api/draw-plot", methods=["GET"])
+    def api_draw_plot():
+        semester = request.args.get('semester')
+
+        img_base64, img_base64_sinh, group_A00_base64, group_A01_base64, group_C00_base64 = cluster_by_semester(
+            semester)
+        return render_template(
+            'index.html',
+            rel_cols_plot1=img_base64,
+            rel_cols_plot2=img_base64_sinh,
+            group_A00_plot=group_A00_base64,
+            group_A01_plot=group_A01_base64,
+            group_C00_plot=group_C00_base64,
+
+        )
+
+    @app.route("/api/compare-model", methods=["GET"])
+    def api_model_compate_plot():
+        semester = request.args.get('semester')
+
+        model_plot = visualize_comparison(semester)
+        return render_template('model.html', model_plot=model_plot)
 
     class ScoreSemesterResource(ResourceHelper):
         @api.marshal_with(score_model)

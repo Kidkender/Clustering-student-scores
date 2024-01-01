@@ -1,6 +1,6 @@
 from itertools import combinations
 from database_queries import get_Subject_From_Top5Avg
-from model.enum import semester, subject, group_type
+from enumeration import semester, subject, group_type
 import constant
 from handle import score
 

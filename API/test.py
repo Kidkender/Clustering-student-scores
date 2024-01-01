@@ -1,4 +1,4 @@
-from model.enum import semester, subject, group_type
+from enumeration import semester, subject, group_type
 from database_queries import get_score_by_student_id
 from itertools import combinations
 

@@ -126,3 +126,8 @@ def get_rate_by_student_id(id):
 def get_score_by_semester(semester):
     query = f"SELECT * FROM diem d, hocsinh h WHERE h.MaHocSinh = d.MaHocSinh AND d.ky = {semester}"
     return execute_query(query)
+
+
+def get_all_score_by_semester(semester):
+    query = f"SELECT Toan, Li, Hoa, Sinh, Van, Su, Dia, Ngoai_Ngu, GDCD, Cong_Nghe FROM diem where ky='{semester}'"
+    return execute_query(query)
