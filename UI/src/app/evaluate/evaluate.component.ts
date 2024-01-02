@@ -16,7 +16,7 @@ export class EvaluateComponent implements AfterViewInit {
   }
 
   Init() {
-    this.service.getCompareModel(this.semester4)
+    this.service.getCompareModel(this.semester4, this.n)
     .subscribe({
       next: (re) => {
         this.image6 = re.model_plot
@@ -25,8 +25,9 @@ export class EvaluateComponent implements AfterViewInit {
   }
   image6 = ''
   semester4 = 1
+  n = 6
   compareModel(){
-    this.service.getCompareModel(this.semester4)
+    this.service.getCompareModel(this.semester4,this.n)
     .subscribe({
       next: (re) => {
         this.image6 = re.model_plot

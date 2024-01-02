@@ -64,8 +64,8 @@ export class APIservicesService {
       return this.http.get<any>(this.baseApiUrl + "/api/score_Avg_year?grade="+grade+"&n="+n_cluster)
     }
 
-    getCompareModel(semester: any){
-      return this.http.get<any>(this.baseApiUrl + "/api/compare-model?semester=" + semester)
+    getCompareModel(semester: any, n_cluster: any ){
+      return this.http.get<any>(this.baseApiUrl + "/api/compare-model?semester=" + semester+"&n="+n_cluster)
     }
 
     getDrawPilot(semester: any){

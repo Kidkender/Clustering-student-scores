@@ -12,6 +12,17 @@
                 <option value="5">Học kì 1 lớp 12</option>
                 </select>
             </div>
+            <div>
+                <h4 class="text-xl font-medium mb-2">Chọn số lượng cụm:</h4>
+                <select [(ngModel)]="n" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                </select>
+            </div>
             <div class="flex flex-col justify-end">
                 <button class="w-20 px-4 py-2 rounded-lg bg-blue-400 text-white" (click)="compareModel()">Xem</button>
             </div>
