@@ -23,19 +23,14 @@ def create_groupSubject_From_Top5(student_code, semester):
     return list_group_3, list_group_2
 
 
-def find_group_subject(code_student, option):
+def find_single_group_subject(code_student, option):
     list_result = []
 
-    print("Option: ", option)
     label = group_type.Recommend_Type.MAIN_RECOMMEND.value
     value = semester.get_group_recommend_value(option)
 
-    print("Semester: ", value)
-
     if value is None:
         raise Exception("Invalid option")
-
-    print("Option: ", type(value) in (tuple, list))
 
     if type(value) in (tuple, list):
         raise Exception("Invalid option")
@@ -71,7 +66,7 @@ def recommend_single_grade(code_student, option):
     if value is None:
         raise Exception("Invalid option")
 
-    listGroup, label = find_group_subject(code_student, option)
+    listGroup, label = find_single_group_subject(code_student, option)
     for result in listGroup:
 
         if result is not None:
@@ -109,3 +104,20 @@ def recommend_combination(code_student, option):
         reccommend, label = recommend_single_grade(code_student, option)
 
     return reccommend, label
+
+
+def find_group_subject(code_student, option):
+    result = ""
+    label = ""
+    grades = semester.get_group_recommend_value(option)
+
+    if grades is None:
+        raise Exception(constant.ERROR_OPTION_GRADE_INVALID)
+
+    if type(grades) in (tuple, list):
+        result, label = score.find_group_subject_muti_grade(
+            code_student, option)
+    else:
+        result, label = find_single_group_subject(code_student, option)
+
+    return result, label

@@ -7,7 +7,6 @@ def recommend_muti_grade(code_student, option):
     score_options = semester.get_group_recommend_value(option)
     listScore = get_score_by_student_id(code_student)
 
-    print(score_options)
     filtered_score = listScore[listScore['Ky'].isin(score_options)]
 
     average_scores = filtered_score.groupby(
@@ -18,7 +17,7 @@ def recommend_muti_grade(code_student, option):
 
     top_5_subjects = get_top_5_subjects(result)
     list_group_3, list_group_2 = create_combination(top_5_subjects)
-    label, list_recommend = find_group_subject(list_group_3, list_group_2)
+    label, list_recommend = find_muti_group_subject(list_group_3, list_group_2)
 
     recommend = recommend_combination(list_recommend)
 
@@ -49,7 +48,7 @@ def create_combination(subjects):
     return list_group_3, list_group_2
 
 
-def find_group_subject(listGroup_3, listGroup_2):
+def find_muti_group_subject(listGroup_3, listGroup_2):
     list_result = []
     label = group_type.Recommend_Type.MAIN_RECOMMEND.value
 
@@ -97,3 +96,37 @@ def recommend_combination(listGroup):
     }
 
     return recommendations
+
+
+def find_group_subject_muti_grade(code_student, option):
+    score_options = semester.get_group_recommend_value(option)
+    listScore = get_score_by_student_id(code_student)
+
+    filtered_score = listScore[listScore['Ky'].isin(score_options)]
+
+    average_scores = filtered_score.groupby(
+        ['MaHocSinh', 'TenHocSinh']).mean()
+
+    result = average_scores.reset_index().drop(
+        columns=['MaHocSinh', 'TenHocSinh', 'Ky'])
+
+    top_5_subjects = get_top_5_subjects(result)
+    list_group_3, list_group_2 = create_combination(top_5_subjects)
+
+    list_result = []
+    label = group_type.Recommend_Type.MAIN_RECOMMEND.value
+
+    for item in list_group_3:
+        result = subject.get_combination_by_subjects(item[0], item[1], item[2])
+        if (result != None):
+            list_result.append(result)
+
+    if len(list_result) == 0:
+        for item in list_group_2:
+            result = subject.get_combinations_with_subjects(item[0], item[1])
+            if (result != None):
+                list_result.append(result)
+        list_result = [item for sublist in list_result for item in sublist]
+        label = group_type.Recommend_Type.SUB_RECOMMEND.value
+
+    return list_result, label
