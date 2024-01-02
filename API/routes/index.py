@@ -176,6 +176,7 @@ def register_api_routes(app, api):
             return CustomException("Invalid or missing parameter!", 400)
         semester1, semester2 = subject_grade_utils.get_semester_grade(
             api_request.grade)
+        semester2 = semester2 if semester2 is not None else 5
         result = get_Subject_From_Top5Avg(semester2, api_request.student_code)
 
         return jsonify(result.to_dict(orient='records'))
@@ -273,6 +274,7 @@ def register_api_routes(app, api):
     def api_draw_plot():
         semester = request.args.get('semester')
 
+        semester = semester if semester is not None else 5
         img_base64, img_base64_sinh, group_A00_base64, group_A01_base64, group_C00_base64 = cluster_by_semester(
             semester)
         return render_template(
@@ -288,7 +290,7 @@ def register_api_routes(app, api):
     @app.route("/api/compare-model", methods=["GET"])
     def api_model_compate_plot():
         semester = request.args.get('semester')
-
+        semester = semester if semester is not None else 5
         model_plot = visualize_comparison(semester)
         return render_template('model.html', model_plot=model_plot)
 
