@@ -288,7 +288,7 @@ def register_api_routes(app, api):
     @app.route("/api/compare-model", methods=["GET"])
     def api_model_compate_plot():
         semester = request.args.get('semester')
-        n_cluster = request.args.get('n')
+        n_cluster = int(request.args.get('n'))
 
         semester = semester if semester is not None else 5
         n_cluster = n_cluster if n_cluster is not None else 4
