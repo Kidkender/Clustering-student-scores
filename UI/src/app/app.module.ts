@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DetailComponent } from './detail/detail.component';
 import { ChartModule } from 'angular-highcharts';
+import { EvaluateComponent } from './evaluate/evaluate.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ChartModule } from 'angular-highcharts';
     AboutComponent,
     ClusterComponent,
     DataComponent,
-    DetailComponent
+    DetailComponent,
+    EvaluateComponent
   ],
   imports: [
     BrowserModule,

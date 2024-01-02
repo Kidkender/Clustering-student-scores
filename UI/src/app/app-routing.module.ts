@@ -6,6 +6,7 @@ import { AboutComponent } from './about/about.component';
 import { ClusterComponent } from './cluster/cluster.component';
 import { DataComponent } from './data/data.component';
 import { DetailComponent } from './detail/detail.component';
+import { EvaluateComponent } from './evaluate/evaluate.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo:'home' },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'cluster', component: ClusterComponent },
   { path: 'data', component: DataComponent },
+  { path: 'evaluate', component: EvaluateComponent },
   { path: 'detail/:id', component: DetailComponent },
 ];
 

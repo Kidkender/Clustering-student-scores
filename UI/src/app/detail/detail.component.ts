@@ -39,13 +39,14 @@ export class DetailComponent implements AfterViewInit {
       }
     })
 
-    this.service.getRecommendGroup(id)
+    this.service.getRecommendGroup(id, this.grade2)
     .subscribe({
       next: (re : any) => {
         this.recommendLV1 = re.result.level_1
         this.recommendLV2 = re.result.level_2
         this.recommendLV3 = re.result.level_3
         this.recommendLOrder = re.result.other_recommend
+        this.typeRecommend = re.type_recommend == "Main recommend" ? "Kiến nghị chính" : "Kiến nghị cần nỗ lực thêm"
       }
     })
 
@@ -70,12 +71,20 @@ export class DetailComponent implements AfterViewInit {
   recommendLV3: any 
   recommendLOrder: any 
   grade2: any = 'GRADE_10'
+  typeRecommend = ""
 
   changTop5() {
     this.service.getAllTop5SubjectById(this.code, this.grade)
     .subscribe({
       next: (re : any) => {
         this.subjecttop5 = re
+      }
+    })
+
+    this.service.getAllTop10GroupById(this.code,this.grade)
+    .subscribe({
+      next: (re : any) => {
+        this.grouptop10 = re
       }
     })
   }
@@ -86,6 +95,17 @@ export class DetailComponent implements AfterViewInit {
     .subscribe({
       next: (re : any) => {
         this.findgroup = re.result
+      }
+    })
+
+    this.service.getRecommendGroup(this.code, this.grade2)
+    .subscribe({
+      next: (re : any) => {
+        this.recommendLV1 = re.result.level_1
+        this.recommendLV2 = re.result.level_2
+        this.recommendLV3 = re.result.level_3
+        this.recommendLOrder = re.result.other_recommend
+        this.typeRecommend = re.type_recommend == "Main recommend" ? "Kiến nghị chính" : "Kiến nghị cần nỗ lực thêm"
       }
     })
   }

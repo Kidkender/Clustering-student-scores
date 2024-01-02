@@ -40,8 +40,8 @@ export class APIservicesService {
       return this.http.get<any>(this.baseApiUrl + "/api/find_group_subject?code_student="+id+"&option="+option)
     }
 
-    getRecommendGroup(id:any) {
-      return this.http.get<any>(this.baseApiUrl + "/api/recommend_group?code_student="+id+"&option=GRADE_10_11_12")
+    getRecommendGroup(id:any, option: any) {
+      return this.http.get<any>(this.baseApiUrl + "/api/recommend_group?code_student="+id+"&option="+option)
     }
 
     getScoreGroup(grade: any, group: any){
@@ -54,5 +54,21 @@ export class APIservicesService {
 
     getClusterScoreSubjectSemester(subject : any, semester: any, n_cluster: any){
       return this.http.get<any>(this.baseApiUrl + "/api/score-subject-semester?subject="+subject+"&semester="+semester+"&n="+n_cluster)
+    }
+
+    getClusterScoreAVGSemester(semester: any, n_cluster: any){
+      return this.http.get<any>(this.baseApiUrl + "/api/score_Avg_Semester?semester="+semester+"&n="+n_cluster)
+    }
+
+    getClusterScoreAVGYear(grade: any, n_cluster: any){
+      return this.http.get<any>(this.baseApiUrl + "/api/score_Avg_year?grade="+grade+"&n="+n_cluster)
+    }
+
+    getCompareModel(semester: any){
+      return this.http.get<any>(this.baseApiUrl + "/api/compare-model?semester=" + semester)
+    }
+
+    getDrawPilot(semester: any){
+      return this.http.get<any>(this.baseApiUrl + "/api/draw-plot?semester="+semester)
     }
 }

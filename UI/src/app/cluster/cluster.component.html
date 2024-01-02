@@ -1,7 +1,9 @@
 <div class="w-full bg-blue-50 h-auto p-8">
     <div class="h-auto w-full bg-white rounded-md p-8">
         <div class="grid grid-cols-4 gap-4 mb-4">  
+            <div class="col-span-4 text-center font-bold text-xl text-blue-700">PHÂN CỤM CỦA MÔN HỌC THEO KÌ</div>
             <div>
+                <h4 class="text-xl font-medium mb-2">Lọc theo môn học:</h4>
                 <select [(ngModel)]="subject" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option value="toan">Toán</option>
                 <option value="van">Văn</option>
@@ -15,15 +17,17 @@
                 </select>
             </div>
             <div>
+                <h4 class="text-xl font-medium mb-2">Lọc theo kì:</h4>
                 <select [(ngModel)]="semester" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
+                <option value="1">Học kì 1 lớp 10</option>
+                <option value="2">Học kì 2 lớp 10</option>
+                <option value="3">Học kì 1 lớp 11</option>
+                <option value="4">Học kì 2 lớp 10</option>
+                <option value="5">Học kì 1 lớp 12</option>
                 </select>
             </div>
             <div>
+                <h4 class="text-xl font-medium mb-2">Chọn số lượng cụm:</h4>
                 <select [(ngModel)]="n_cluster" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -33,12 +37,113 @@
                 <option value="6">6</option>
                 </select>
             </div>
-            <div>
-                <button class="px-4 py-2 rounded-lg bg-blue-400 text-white" (click)="changeCluster()">Xem</button>
+            <div class="flex flex-col justify-end">
+                <button class="w-20 px-4 py-2 rounded-lg bg-blue-400 text-white" (click)="changeCluster()">Xem</button>
             </div>
             <div class="col-span-4">
                 <div id="divChart">
                     <canvas id="Chart1" >{{ chart }}</canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="h-auto w-full bg-white rounded-md p-8 mt-8">
+        <div class="col-span-4 text-center font-bold text-xl text-blue-700">PHÂN CỤM ĐIỂM TRUNG BÌNH THEO KÌ</div>
+        <div class="grid grid-cols-4 gap-4 mb-4">  
+            <div>
+                <h4 class="text-xl font-medium mb-2">Lọc theo kì:</h4>
+                <select [(ngModel)]="semester2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option value="1">Học kì 1 lớp 10</option>
+                <option value="2">Học kì 2 lớp 10</option>
+                <option value="3">Học kì 1 lớp 11</option>
+                <option value="4">Học kì 2 lớp 10</option>
+                <option value="5">Học kì 1 lớp 12</option>
+                </select>
+            </div>
+            <div>
+                <h4 class="text-xl font-medium mb-2">Chọn số lượng cụm:</h4>
+                <select [(ngModel)]="n_cluster" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                </select>
+            </div>
+            <div class="flex flex-col justify-end">
+                <button class="w-20 px-4 py-2 rounded-lg bg-blue-400 text-white" (click)="changeCluster2()">Xem</button>
+            </div>
+            <div class="col-span-4">
+                <div id="divChart">
+                    <canvas id="Chart2" >{{ chart2 }}</canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="h-auto w-full bg-white rounded-md p-8 mt-8">
+        <div class="col-span-4 text-center font-bold text-xl text-blue-700">PHÂN CỤM ĐIỂM TRUNG BÌNH THEO KHỐI</div>
+        <div class="grid grid-cols-4 gap-4 mb-4">  
+            <div>
+                <h4 class="text-xl font-medium mb-2">Lọc theo khối:</h4>
+                <select [(ngModel)]="grade" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                </select>
+            </div>
+            <div>
+                <h4 class="text-xl font-medium mb-2">Chọn số lượng cụm:</h4>
+                <select [(ngModel)]="n_cluster" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                </select>
+            </div>
+            <div class="flex flex-col justify-end">
+                <button class="w-20 px-4 py-2 rounded-lg bg-blue-400 text-white" (click)="changeCluster3()">Xem</button>
+            </div>
+            <div class="col-span-4">
+                <div id="divChart">
+                    <canvas id="Chart3" >{{ chart3 }}</canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="h-auto w-full bg-white rounded-md p-8 mt-8">
+        <div class="col-span-4 text-center font-bold text-xl text-blue-700">BIỂU ĐỒ PHÂN CỤM TRÊN TỪNG MÔN VỚI NHAU</div>
+        <div class="grid grid-cols-4 gap-4 mb-4">  
+            <div>
+                <h4 class="text-xl font-medium mb-2">Lọc theo kì:</h4>
+                <select [(ngModel)]="semester3" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option value="1">Học kì 1 lớp 10</option>
+                <option value="2">Học kì 2 lớp 10</option>
+                <option value="3">Học kì 1 lớp 11</option>
+                <option value="4">Học kì 2 lớp 10</option>
+                <option value="5">Học kì 1 lớp 12</option>
+                </select>
+            </div>
+            <div class="flex flex-col justify-end">
+                <button class="w-20 px-4 py-2 rounded-lg bg-blue-400 text-white" (click)="drawPilot()">Xem</button>
+            </div>
+            <div class="col-span-4">
+                <div class="p-4 bg-blue-100">
+                    <img src="data:image/png;base64,{{image1}}" style="width: 100%; ">
+                </div>
+                <img src="data:image/png;base64,{{image2}}" style="width: 100%; margin-top: 20px;">
+                <div class="col-span-4 text-center font-bold text-xl text-blue-700 mt-20 mb-4">BIỂU ĐỒ PHÂN CỤM TRÊN KHỐI TUYỂN SINH</div>
+                <div class="p-4 bg-blue-100">
+                    <img src="data:image/png;base64,{{image3}}" style="width: 100%; ">
+                </div>
+                <img src="data:image/png;base64,{{image4}}" style="width: 100%; margin-top: 20px;">
+                <div class="p-4 bg-blue-100">
+                    <img src="data:image/png;base64,{{image5}}" style="width: 100%; ">
                 </div>
             </div>
         </div>

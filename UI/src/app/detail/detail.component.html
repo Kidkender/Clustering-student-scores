@@ -62,36 +62,7 @@
     </div>
     <div class="grid-cols-2 grid gap-4 mt-4 h-auto">
         <div class="h-auto w-full bg-white rounded-md p-8 grid-cols-2 grid gap-2">
-            <div>
-                <select [(ngModel)]="grade" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option value="" selected>Chọn khối</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                </select>
-            </div>
-            <div>
-                <button class="px-4 py-2 rounded-lg bg-blue-400 text-white" (click)="changTop5()">Xem</button>
-            </div>
             <div class="col-span-2">
-                <h4 class="text-xl font-medium mb-2">Top 5 môn học:</h4>
-                <table class="w-full">
-                    <thead>
-                        <tr>
-                            <th>Top</th>
-                            <th>Môn học</th>
-                            <th>Điểm</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let item of subjecttop5; let i = index">
-                            <td>{{i + 1}}</td>
-                            <td>{{item.subject}}</td>
-                            <td>{{item.value}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-
                 <h4 class="text-xl font-medium my-2">Tổ hợp môn có thể đăng ký:</h4>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
@@ -100,6 +71,8 @@
                         <option value="GRADE_10">10</option>
                         <option value="GRADE_11">11</option>
                         <option value="GRADE_12">12</option>
+                        <option value="GRADE_10_11">10-11</option>
+                        <option value="GRADE_10_11_12">10-11-12</option>
                         </select>
                     </div>
                     <div>
@@ -117,6 +90,10 @@
                 <h4 class="text-xl font-medium my-2">Tổ hợp theo cấp độ:</h4>
                 <table class="w-full">
                     <tbody>
+                        <tr>
+                            <td [width]="200" class="bg-red-100">Loại kiến nghị:  </td>
+                            <td><b>{{typeRecommend}}</b></td>
+                        </tr>
                         <tr>
                             <td [width]="200" class="bg-blue-100">Cấp độ 1:  </td>
                             <td><b>{{recommendLV1}}</b></td>
@@ -138,8 +115,40 @@
             </div>
         </div>
         <div class="h-full w-full bg-white rounded-md p-8">
-            <div class="col-span-2">
-                <h4 class="text-xl font-medium mb-2">Top 5 tổ hợp môn:</h4>
+            <div class="grid-cols-2 grid gap-4">
+                <div>
+                    <h4 class="text-xl font-medium mb-2">Lọc theo khối:</h4>
+                    <select [(ngModel)]="grade" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option value="" selected>Chọn khối</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    </select>
+                </div>
+                <div class="flex flex-col justify-end">
+                    <button class="w-20 px-4 py-2 rounded-lg bg-blue-400 text-white" (click)="changTop5()">Xem</button>
+                </div>
+                <div class="col-span-2">
+                    <h4 class="text-xl font-medium mb-2">Top 5 môn học có điểm trung bình cao nhất:</h4>
+                    <table class="w-full">
+                        <thead>
+                            <tr>
+                                <th>Top</th>
+                                <th>Môn học</th>
+                                <th>Điểm</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of subjecttop5; let i = index">
+                                <td>{{i + 1}}</td>
+                                <td>{{item.subject}}</td>
+                                <td>{{item.value}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-span-2">
+                    <h4 class="text-xl font-medium mb-2">Top 10 tổ hợp môn:</h4>
                 <table class="w-full">
                     <thead>
                         <tr>
@@ -160,6 +169,7 @@
                         </tr>
                     </tbody>
                 </table>
+                </div>
             </div>
         </div>
     </div>
