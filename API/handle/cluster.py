@@ -4,8 +4,6 @@ from database_queries import get_all_score_by_semester
 from handle.draw_pilot import plot_3d_in_group, plot_relationship_columns
 from io import BytesIO
 import base64
-from sklearn.datasets import make_blobs
-from sklearn.metrics import silhouette_score
 import matplotlib.pyplot as plt
 
 
@@ -167,10 +165,11 @@ def compare_model(data, n_clusters):
     return kmeans_labels, dbscan_labels, meanshift_labels
 
 
-def visualize_comparison(semester):
+def visualize_comparison(semester, n_cluster):
     data = get_all_score_by_semester(semester)
 
-    kmeans_labels, dbscan_labels, meanshift_labels = compare_model(data, 4)
+    kmeans_labels, dbscan_labels, meanshift_labels = compare_model(
+        data, n_cluster)
     plt.figure(figsize=(12, 6))
 
     plt.subplot(1, 3, 1)

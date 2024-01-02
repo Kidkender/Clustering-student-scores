@@ -1,4 +1,4 @@
-from flask import jsonify, request, json, render_template
+from flask import jsonify, request
 from database_queries import (
     get_data_grade,
     get_score_Avg_Semester,
@@ -288,8 +288,12 @@ def register_api_routes(app, api):
     @app.route("/api/compare-model", methods=["GET"])
     def api_model_compate_plot():
         semester = request.args.get('semester')
+        n_cluster = request.args.get('n')
+
         semester = semester if semester is not None else 5
-        model_plot = visualize_comparison(semester)
+        n_cluster = n_cluster if n_cluster is not None else 4
+
+        model_plot = visualize_comparison(semester, n_cluster)
         return jsonify({"model_plot": model_plot})
 
     class ScoreSemesterResource(ResourceHelper):
