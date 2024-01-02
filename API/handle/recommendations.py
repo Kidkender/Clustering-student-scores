@@ -25,14 +25,21 @@ def create_groupSubject_From_Top5(student_code, semester):
 
 def find_group_subject(code_student, option):
     list_result = []
+
+    print("Option: ", option)
     label = group_type.Recommend_Type.MAIN_RECOMMEND.value
     value = semester.get_group_recommend_value(option)
+
+    print("Semester: ", value)
 
     if value is None:
         raise Exception("Invalid option")
 
+    print("Option: ", type(value) in (tuple, list))
+
     if type(value) in (tuple, list):
         raise Exception("Invalid option")
+
     listGroup_3, list_group_2 = create_groupSubject_From_Top5(
         code_student, value)
 

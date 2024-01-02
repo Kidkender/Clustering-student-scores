@@ -252,7 +252,7 @@ def register_api_routes(app, api):
 
         result, label = find_group_subject(code_student, option)
         return jsonify({
-            "type recommend": label,
+            "type_recommend": label,
             "result": result
         })
 
@@ -266,7 +266,7 @@ def register_api_routes(app, api):
 
         result, label = recommend_combination(code_student, option_recommend)
         return jsonify({
-            "type recommend": label,
+            "type_recommend": label,
             "result": result
         })
 
