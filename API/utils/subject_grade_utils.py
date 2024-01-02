@@ -11,7 +11,7 @@ def get_semester_grade(grade):
         return semester_1, semester_2
     elif grade == 12:
         semester_1 = 5
-        semester_2 = None
+        semester_2 = 5
         return semester_1, semester_2
 
 
