@@ -277,22 +277,20 @@ def register_api_routes(app, api):
         semester = semester if semester is not None else 5
         img_base64, img_base64_sinh, group_A00_base64, group_A01_base64, group_C00_base64 = cluster_by_semester(
             semester)
-        return render_template(
-            'index.html',
-            rel_cols_plot1=img_base64,
-            rel_cols_plot2=img_base64_sinh,
-            group_A00_plot=group_A00_base64,
-            group_A01_plot=group_A01_base64,
-            group_C00_plot=group_C00_base64,
-
-        )
+        return jsonify({
+            "rel_cols_plot1": img_base64,
+            "rel_cols_plot2": img_base64_sinh,
+            "group_A00_plot": group_A00_base64,
+            "group_A01_plot": group_A01_base64,
+            "group_C00_plot": group_C00_base64,
+        })
 
     @app.route("/api/compare-model", methods=["GET"])
     def api_model_compate_plot():
         semester = request.args.get('semester')
         semester = semester if semester is not None else 5
         model_plot = visualize_comparison(semester)
-        return render_template('model.html', model_plot=model_plot)
+        return jsonify({"model_plot": model_plot})
 
     class ScoreSemesterResource(ResourceHelper):
         @api.marshal_with(score_model)
